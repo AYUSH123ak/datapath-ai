@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataPath AI — Get Hired as a Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --ink: #0d0d0d;
+  --ink2: #1a1a1a;
+  --ink3: #2a2a2a;
+  --fog: #f5f4f0;
+  --fog2: #eeede8;
+  --fog3: #e5e4de;
+  --accent: #ff4d1c;
+  --accent2: #0047ff;
+  --gold: #c8a84b;
+  --white: #fafaf8;
+  --border: rgba(13,13,13,0.12);
+  --border2: rgba(13,13,13,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px; font-weight: 800;
+  letter-spacing: -0.3px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.nav-logo-mark {
+  width: 28px; height: 28px; background: var(--ink);
+  border-radius: 7px; display: flex; align-items: center;
+  justify-content: center; font-size: 14px; color: var(--white);
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--fog2); border-radius: 10px; padding: 5px;
+  border: 1px solid var(--border);
+}
+
+.nav-link {
+  padding: 7px 16px; border-radius: 7px; cursor: pointer;
+  font-size: 13px; font-weight: 500; color: #666;
+  transition: all 0.18s; border: none; background: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-link.active { background: var(--ink); color: var(--white); }
+.nav-link:hover:not(.active) { color: var(--ink); background: var(--fog3); }
+
+.nav-badge {
+  font-size: 10px; font-weight: 700; background: var(--accent);
+  color: white; padding: 2px 6px; border-radius: 4px; margin-left: 4px;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 120px 48px 80px;
+  position: relative; overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 50%, rgba(200,168,75,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(255,77,28,0.05) 0%, transparent 50%);
+}
+
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: linear-gradient(var(--ink) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--ink) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-content { position: relative; max-width: 1100px; margin: 0 auto; width: 100%; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 500; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 28px;
+  border: 1px solid rgba(255,77,28,0.25);
+  padding: 6px 14px; border-radius: 99px;
+  background: rgba(255,77,28,0.04);
+}
+
+.hero-eyebrow::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  box-shadow: 0 0 8px var(--accent);
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 800; line-height: 0.95;
+  letter-spacing: -3px; margin-bottom: 32px;
+}
+
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  font-size: 17px; color: #555; line-height: 1.7;
+  max-width: 500px; margin-bottom: 48px; font-weight: 400;
+}
+
+.hero-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 10px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: all 0.18s; border: none;
+  font-family: 'DM Sans', sans-serif;
+  text-decoration: none;
+}
+
+.btn-dark {
+  background: var(--ink); color: var(--white);
+  box-shadow: 0 4px 20px rgba(13,13,13,0.25);
+}
+.btn-dark:hover { background: var(--ink3); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(13,13,13,0.3); }
+
+.btn-ghost {
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--border2);
+}
+.btn-ghost:hover { background: var(--fog2); border-color: var(--border); }
+
+.btn-accent {
+  background: var(--accent); color: white;
+  box-shadow: 0 4px 20px rgba(255,77,28,0.3);
+}
+.btn-accent:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(255,77,28,0.4); }
+
+.hero-stats {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.stat-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  min-width: 160px;
+}
+.stat-card:nth-child(2) { transform: translateX(20px); }
+
+.stat-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px; font-weight: 800; line-height: 1;
+  color: var(--ink); margin-bottom: 4px;
+}
+.stat-val span { color: var(--accent); }
+.stat-desc { font-size: 12px; color: #888; font-weight: 400; }
+
+/* ── SECTION COMMON ── */
+.section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 800; letter-spacing: -1.5px;
+  line-height: 1.05; margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 16px; color: #666; max-width: 480px; line-height: 1.7;
+}
+
+/* ── TOOL SECTION ── */
+.tools-wrapper {
+  background: var(--fog);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.tools-inner { max-width: 1200px; margin: 0 auto; padding: 80px 48px; }
+
+.tool-tabs {
+  display: flex; gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  background: var(--white);
+  margin-bottom: 40px;
+  width: fit-content;
+}
+
+.tool-tab {
+  padding: 14px 28px; cursor: pointer;
+  font-size: 13px; font-weight: 500;
+  color: #888; transition: all 0.18s;
+  border: none; background: none;
+  font-family: 'DM Sans', sans-serif;
+  border-right: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.tool-tab:last-child { border-right: none; }
+.tool-tab.active { background: var(--ink); color: var(--white); }
+.tool-tab:hover:not(.active) { background: var(--fog2); color: var(--ink); }
+
+.tool-panel { display: none; }
+.tool-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+/* ── FORM ELEMENTS ── */
+.form-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px;
+}
+
+.field { margin-bottom: 20px; }
+.field label {
+  display: block; font-size: 11px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: #999; margin-bottom: 8px;
+}
+
+.field input, .field select, .field textarea {
+  width: 100%; padding: 11px 14px;
+  background: var(--fog); border: 1px solid var(--border);
+  border-radius: 9px; color: var(--ink);
+  font-size: 14px; font-family: 'DM Sans', sans-serif;
+  transition: all 0.18s; outline: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--ink); background: var(--white);
+  box-shadow: 0 0 0 3px rgba(13,13,13,0.06);
+}
+.field textarea { resize: vertical; min-height: 110px; }
+.field select option { background: var(--white); }
+
+/* CHIPS */
+.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.chip {
+  padding: 5px 12px; border-radius: 6px; cursor: pointer;
+  font-size: 12px; font-weight: 500; transition: all 0.15s;
+  background: var(--fog2); border: 1px solid var(--border);
+  color: #777; font-family: 'DM Sans', sans-serif;
+}
+.chip.on { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.chip:hover:not(.on) { border-color: var(--ink); color: var(--ink); }
+
+/* OUTPUT CARD */
+.output-card {
+  background: var(--ink); color: var(--white);
+  border-radius: 16px; padding: 32px;
+  position: relative; overflow: hidden; min-height: 200px;
+  display: flex; flex-direction: column;
+}
+
+.output-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent2));
+}
+
+.output-status {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+}
+.output-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #3dffa0;
+  box-shadow: 0 0 8px #3dffa0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+.output-empty {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; gap: 12px; padding: 40px 20px;
+}
+.output-empty-icon { font-size: 36px; opacity: 0.3; }
+.output-empty-text { font-size: 14px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+
+.output-text {
+  font-size: 13.5px; line-height: 1.8;
+  color: rgba(255,255,255,0.85);
+  white-space: pre-wrap; flex: 1;
+  display: none;
+}
+.output-text.show { display: block; }
+
+.output-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.output-copy {
+  padding: 7px 16px; border-radius: 7px; font-size: 12px;
+  font-weight: 500; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6);
+  transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+}
+.output-copy:hover { background: rgba(255,255,255,0.1); color: white; }
+
+/* LOADING */
+.loader {
+  display: none; height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 99px; overflow: hidden;
+  margin: 12px 0;
+}
+.loader.on { display: block; }
+.loader-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  border-radius: 99px;
+  animation: slide 1.8s ease-in-out infinite;
+}
+@keyframes slide{0%{width:0%;margin-left:0%}50%{width:60%;margin-left:20%}100%{width:0%;margin-left:100%}}
+
+/* INNER TABS (resume) */
+.inner-tabs-row { display: flex; gap: 6px; margin-bottom: 24px; }
+.itab {
+  padding: 7px 14px; border-radius: 7px; cursor: pointer;
+  font-size: 12px; font-weight: 500; color: #888;
+  border: 1px solid var(--border); background: none;
+  transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+}
+.itab.active { background: var(--ink); color: white; border-color: var(--ink); }
+.itab:hover:not(.active) { color: var(--ink); }
+
+.ipanel { display: none; }
+.ipanel.active { display: block; }
+
+/* INTERVIEW QUESTION BOX */
+.q-box {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 22px; margin-bottom: 16px;
+}
+.q-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+  border: 1px solid rgba(255,77,28,0.2);
+  padding: 3px 9px; border-radius: 4px; background: rgba(255,77,28,0.04);
+}
+.q-text { font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--ink); }
+.q-code {
+  background: var(--fog2); padding: 2px 7px;
+  border-radius: 4px; font-family: monospace; font-size: 13px;
+}
+
+/* PROGRESS */
+.prog-bar { height: 6px; background: var(--fog3); border-radius: 99px; overflow: hidden; }
+.prog-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), var(--gold));
+  border-radius: 99px; transition: width 0.5s ease;
+}
+
+/* SCORE CARDS */
+.score-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
+.score-card {
+  background: var(--fog2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; text-align: center;
+}
+.score-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px; font-weight: 800; color: var(--ink);
+}
+.score-num.good { color: #16a34a; }
+.score-num.bad  { color: var(--accent); }
+.score-lbl { font-size: 11px; color: #888; margin-top: 2px; }
+
+/* MOCK CHAT */
+.chat-box {
+  background: var(--ink); border-radius: 16px;
+  padding: 0; overflow: hidden;
+  display: flex; flex-direction: column; height: 480px;
+}
+.chat-header {
+  padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; gap: 10px;
+}
+.chat-avatar {
+  width: 32px; height: 32px; background: var(--accent);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-size: 15px;
+}
+.chat-name { font-size: 14px; font-weight: 600; color: white; }
+.chat-status { font-size: 11px; color: rgba(255,255,255,0.4); }
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+.msg-ai {
+  align-self: flex-start; max-width: 82%;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.08);
+  padding: 11px 14px; border-radius: 12px 12px 12px 3px;
+  font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.6; white-space: pre-wrap;
+}
+.msg-user {
+  align-self: flex-end; max-width: 78%;
+  background: var(--accent); padding: 11px 14px;
+  border-radius: 12px 12px 3px 12px;
+  font-size: 13px; color: white; line-height: 1.6;
+}
+.msg-sys {
+  align-self: center; font-size: 11px;
+  color: rgba(255,255,255,0.25); padding: 4px 0;
+}
+
+.chat-input-row {
+  padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; gap: 8px;
+}
+.chat-input {
+  flex: 1; background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 9px; padding: 10px 14px;
+  color: white; font-size: 13px; font-family: 'DM Sans', sans-serif;
+  outline: none; resize: none; min-height: 42px; max-height: 100px;
+}
+.chat-input::placeholder { color: rgba(255,255,255,0.25); }
+.chat-input:focus { border-color: rgba(255,255,255,0.2); }
+.chat-send {
+  width: 42px; height: 42px; border-radius: 9px;
+  background: var(--accent); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 16px; transition: all 0.18s;
+  flex-shrink: 0;
+}
+.chat-send:hover { background: #e03d10; transform: scale(1.05); }
+
+/* ── PRICING ── */
+.pricing-section {
+  padding: 100px 48px; background: var(--ink);
+  color: var(--white);
+}
+.pricing-inner { max-width: 1100px; margin: 0 auto; }
+
+.pricing-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+  margin-bottom: 16px;
+}
+
+.pricing-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800; letter-spacing: -2px;
+  line-height: 1.05; margin-bottom: 60px;
+}
+
+.pricing-title em { font-style: normal; color: var(--gold); }
+
+.plans { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+.plan {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px; padding: 32px;
+  transition: all 0.2s; cursor: pointer; position: relative;
+  background: rgba(255,255,255,0.02);
+}
+.plan:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+.plan.featured {
+  border-color: var(--gold);
+  background: rgba(200,168,75,0.06);
+}
+
+.plan-tag {
+  position: absolute; top: -10px; left: 24px;
+  background: var(--gold); color: var(--ink);
+  font-size: 10px; font-weight: 800; letter-spacing: 1px;
+  padding: 3px 10px; border-radius: 4px; text-transform: uppercase;
+}
+
+.plan-name {
+  font-size: 12px; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+}
+
+.plan-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 44px; font-weight: 800; line-height: 1;
+  color: white; margin-bottom: 4px;
+}
+.plan-price sup { font-size: 20px; vertical-align: top; margin-top: 8px; font-weight: 600; }
+
+.plan-period { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
+
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.plan-features li {
+  font-size: 13px; color: rgba(255,255,255,0.65);
+  display: flex; align-items: center; gap: 8px;
+}
+.plan-features li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+.plan-btn {
+  width: 100%; padding: 13px; border-radius: 9px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06); color: white;
+  transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+}
+.plan-btn:hover { background: rgba(255,255,255,0.12); }
+.plan-featured-btn {
+  background: var(--gold) !important; color: var(--ink) !important;
+  border-color: var(--gold) !important; font-weight: 600 !important;
+}
+.plan-featured-btn:hover { background: #d4b055 !important; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 28px; right: 28px; z-index: 500;
+  padding: 13px 20px; border-radius: 10px; font-size: 14px; font-weight: 500;
+  transform: translateY(60px); opacity: 0; transition: all 0.25s;
+  pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.ok  { background: var(--ink); color: white; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.toast.err { background: var(--accent); color: white; }
+.toast.inf { background: var(--accent2); color: white; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  .hero-stats { display: none; }
+  .section { padding: 60px 20px; }
+  .tools-inner { padding: 60px 20px; }
+  .tool-panel.active { grid-template-columns: 1fr; }
+  .pricing-section { padding: 60px 20px; }
+  .plans { grid-template-columns: 1fr; gap: 12px; }
+  .score-row { grid-template-columns: repeat(3,1fr); }
+  .tool-tabs { overflow-x: auto; }
+}
+
+/* ── MOBILE NAV ── */
+.mob-nav {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,250,248,0.95); backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  padding: 10px 20px 16px;
+}
+.mob-nav-inner { display: flex; justify-content: space-around; }
+.mob-tab {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 500; color: #999; cursor: pointer;
+  border: none; background: none; font-family: 'DM Sans', sans-serif;
+  padding: 4px 10px; border-radius: 8px; transition: all 0.15s;
+}
+.mob-tab.active { color: var(--ink); background: var(--fog2); }
+.mob-tab-icon { font-size: 18px; }
+
+@media(max-width:900px){ .mob-nav { display: block; } body { padding-bottom: 70px; } }
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">📊</div>
+    DataPath AI
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="goTo('hero')">Home</button>
+    <button class="nav-link" onclick="goTo('tools')">Tools <span class="nav-badge">AI</span></button>
+    <button class="nav-link" onclick="goTo('pricing')">Pricing</button>
+  </div>
+  <button class="btn btn-dark" style="padding:10px 22px;font-size:13px;" onclick="goTo('pricing')">
+    Get Access →
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="padding-top:0;">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Phase 1 — Now Live</div>
+      <h1>Get Hired<br>as a <em>Data</em><br><em>Analyst.</em></h1>
+      <p class="hero-sub">Roadmap. Resume. Interview prep. Three AI-powered tools built specifically for data analysts in India.</p>
+      <div class="hero-actions">
+        <button class="btn btn-dark" onclick="goTo('tools')">Try the Tools ↓</button>
+        <button class="btn btn-ghost" onclick="goTo('pricing')">See Pricing</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-val">4.8<span>★</span></div>
+        <div class="stat-desc">Average Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">₹<span>499</span></div>
+        <div class="stat-desc">Per Month Only</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">90<span>d</span></div>
+        <div class="stat-desc">To Job-Ready</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="tools-wrapper">
+    <div class="tools-inner">
+      <div style="margin-bottom:36px;">
+        <div class="section-label">Three Tools</div>
+        <div class="section-title">Everything You<br>Need. Nothing<br>You Don't.</div>
+      </div>
+
+      <div class="tool-tabs">
+        <button class="tool-tab active" onclick="switchTool('roadmap')">🗺️ Roadmap</button>
+        <button class="tool-tab" onclick="switchTool('resume')">📄 Resume</button>
+        <button class="tool-tab" onclick="switchTool('interview')">🎯 Interview</button>
+      </div>
+
+      <!-- ── ROADMAP TOOL ── -->
+      <div id="tool-roadmap" class="tool-panel active">
+        <div class="form-card">
+          <div class="field">
+            <label>Current Level</label>
+            <select id="rm-level">
+              <option value="complete-beginner">Complete Beginner</option>
+              <option value="excel-user">Excel User (some analytics)</option>
+              <option value="learning-basics">Learning SQL / Python basics</option>
+              <option value="junior">Junior Analyst (0–1 years)</option>
+              <option value="career-switcher">Career Switcher</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Target Role</label>
+            <select id="rm-role">
+              <option value="data-analyst">Data Analyst</option>
+              <option value="business-analyst">Business Analyst</option>
+              <option value="product-analyst">Product Analyst</option>
+              <option value="marketing-analyst">Marketing Analyst</option>
+              <option value="analytics-engineer">Analytics Engineer</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Timeline</label>
+            <select id="rm-timeline">
+              <option value="3-months">3 Months — Intensive</option>
+              <option value="6-months">6 Months — Balanced</option>
+              <option value="12-months">12 Months — Part-time</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Skills You Already Have</label>
+            <div class="chips" id="rm-chips">
+              <span class="chip" onclick="tog(this)">Excel</span>
+              <span class="chip" onclick="tog(this)">SQL</span>
+              <span class="chip" onclick="tog(this)">Python</span>
+              <span class="chip" onclick="tog(this)">Power BI</span>
+              <span class="chip" onclick="tog(this)">Tableau</span>
+              <span class="chip" onclick="tog(this)">Statistics</span>
+              <span class="chip" onclick="tog(this)">R</span>
+              <span class="chip" onclick="tog(this)">AWS</span>
+            </div>
+          </div>
+          <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="genRoadmap()">
+            Generate My Roadmap →
+          </button>
+        </div>
+
+        <div class="output-card">
+          <div class="output-status"><div class="output-dot"></div>AI Output</div>
+          <div class="loader" id="rm-loader"><div class="loader-bar"></div></div>
+          <div class="output-empty" id="rm-empty">
+            <div class="output-empty-icon">🗺️</div>
+            <div class="output-empty-text">Fill in your details and hit Generate.<br>Your week-by-week plan will appear here.</div>
+          </div>
+          <div class="output-text" id="rm-out"></div>
+          <div class="output-footer" style="display:none;" id="rm-footer">
+            <span style="font-size:11px;color:rgba(255,255,255,0.3);">Your personalized roadmap</span>
+            <button class="output-copy" onclick="cp('rm-out')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RESUME TOOL ── -->
+      <div id="tool-resume" class="tool-panel">
+        <div class="form-card">
+          <div class="inner-tabs-row">
+            <button class="itab active" onclick="switchResume('optimizer')">Optimizer</button>
+            <button class="itab" onclick="switchResume('keywords')">ATS Keywords</button>
+            <button class="itab" onclick="switchResume('bullets')">Bullet Rewriter</button>
+          </div>
+
+          <div id="res-optimizer" class="ipanel active">
+            <div class="field"><label>Your Resume</label><textarea id="res-cv" placeholder="Paste your full resume text here..."></textarea></div>
+            <div class="field"><label>Job Description</label><textarea id="res-jd" placeholder="Paste the job description you're applying to..."></textarea></div>
+            <div class="field"><label>Years of Experience</label>
+              <select id="res-exp">
+                <option value="fresher">Fresher / 0 years</option>
+                <option value="1">1 year</option>
+                <option value="2">2 years</option>
+                <option value="3-5">3–5 years</option>
+                <option value="5+">5+ years</option>
+              </select>
+            </div>
+            <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="optimizeResume()">Optimize Resume →</button>
+          </div>
+
+          <div id="res-keywords" class="ipanel">
+            <div class="field"><label>Job Description</label><textarea id="ats-jd" placeholder="Paste JD to extract ATS keywords..."></textarea></div>
+            <div class="field"><label>Your Resume (Optional)</label><textarea id="ats-cv" placeholder="Paste resume to see what you're missing..."></textarea></div>
+            <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="analyzeATS()">Analyze Keywords →</button>
+          </div>
+
+          <div id="res-bullets" class="ipanel">
+            <div class="field"><label>Weak Bullets (one per line)</label>
+              <textarea id="bul-in" placeholder="Worked on data analysis&#10;Made reports&#10;Used SQL to query database"></textarea>
+            </div>
+            <div class="field"><label>Your Level</label>
+              <select id="bul-lvl"><option value="junior">Junior</option><option value="mid">Mid Level</option><option value="senior">Senior</option></select>
+            </div>
+            <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="rewriteBullets()">Rewrite with Impact →</button>
+          </div>
+        </div>
+
+        <div class="output-card">
+          <div class="output-status"><div class="output-dot"></div>AI Output</div>
+          <div class="loader" id="res-loader"><div class="loader-bar"></div></div>
+          <div class="output-empty" id="res-empty">
+            <div class="output-empty-icon">📄</div>
+            <div class="output-empty-text">Your optimized resume,<br>ATS keywords, or power bullets<br>will appear here.</div>
+          </div>
+          <div class="output-text" id="res-out"></div>
+          <div class="output-footer" style="display:none;" id="res-footer">
+            <span style="font-size:11px;color:rgba(255,255,255,0.3);">AI optimized output</span>
+            <button class="output-copy" onclick="cp('res-out')">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── INTERVIEW TOOL ── -->
+      <div id="tool-interview" class="tool-panel">
+        <div class="form-card" style="display:flex;flex-direction:column;gap:0;">
+          <div class="inner-tabs-row">
+            <button class="itab active" onclick="switchInt('sql')">SQL</button>
+            <button class="itab" onclick="switchInt('case')">Case Study</button>
+            <button class="itab" onclick="switchInt('behavioral')">Behavioral</button>
+            <button class="itab" onclick="switchInt('mock')">Full Mock</button>
+          </div>
+
+          <!-- SQL -->
+          <div id="int-sql" class="ipanel active">
+            <div class="q-box">
+              <div class="q-tag">SQL · <span id="sql-diff">Intermediate</span></div>
+              <div class="q-text" id="sql-q">You have a table <span class="q-code">orders(order_id, customer_id, amount, created_at)</span>.<br><br>Write a query to find customers with more than 3 orders AND total spend over $500, ordered by total spend descending.</div>
+            </div>
+            <div class="field">
+              <label>Your SQL Answer</label>
+              <textarea id="sql-ans" placeholder="SELECT customer_id, COUNT(*) as orders,&#10;SUM(amount) as total_spend&#10;FROM orders&#10;GROUP BY customer_id&#10;HAVING ..." style="font-family:monospace;font-size:13px;min-height:130px;"></textarea>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn btn-dark" onclick="checkSQL()" style="padding:11px 20px;font-size:13px;">Check Answer</button>
+              <button class="btn btn-ghost" onclick="sqlHint()" style="padding:11px 20px;font-size:13px;">Hint</button>
+              <button class="btn btn-ghost" onclick="nextSQL()" style="padding:11px 20px;font-size:13px;">Next →</button>
+            </div>
+            <div class="score-row" style="margin-top:20px;">
+              <div class="score-card"><div class="score-num" id="s-att">0</div><div class="score-lbl">Attempted</div></div>
+              <div class="score-card"><div class="score-num good" id="s-cor">0</div><div class="score-lbl">Correct</div></div>
+              <div class="score-card"><div class="score-num" id="s-acc">—</div><div class="score-lbl">Accuracy</div></div>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" id="s-prog" style="width:0%"></div></div>
+          </div>
+
+          <!-- CASE -->
+          <div id="int-case" class="ipanel">
+            <div class="q-box" style="background:linear-gradient(135deg,rgba(255,77,28,0.04),rgba(200,168,75,0.04));">
+              <div class="q-tag">Case Study</div>
+              <div class="q-text" id="case-q">Your company's DAU dropped 15% last Tuesday. The CEO needs an explanation by end of day. Walk through your complete analysis framework.</div>
+            </div>
+            <div class="field"><label>Your Approach</label>
+              <textarea id="case-ans" placeholder="1. Clarifying questions I'd ask first...&#10;2. How I'd segment the problem...&#10;3. Data sources I'd check...&#10;4. Hypotheses I'd test..." style="min-height:160px;"></textarea>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn btn-dark" onclick="evalCase()" style="padding:11px 20px;font-size:13px;">Get Evaluation</button>
+              <button class="btn btn-ghost" onclick="caseHint()" style="padding:11px 20px;font-size:13px;">Show Framework</button>
+              <button class="btn btn-ghost" onclick="newCase()" style="padding:11px 20px;font-size:13px;">New Case</button>
+            </div>
+          </div>
+
+          <!-- BEHAVIORAL -->
+          <div id="int-behavioral" class="ipanel">
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
+              <button class="btn btn-ghost" onclick="loadBQ('conflict')" style="padding:8px 14px;font-size:12px;">😤 Conflict</button>
+              <button class="btn btn-ghost" onclick="loadBQ('leadership')" style="padding:8px 14px;font-size:12px;">👑 Leadership</button>
+              <button class="btn btn-ghost" onclick="loadBQ('failure')" style="padding:8px 14px;font-size:12px;">📉 Failure</button>
+              <button class="btn btn-ghost" onclick="loadBQ('success')" style="padding:8px 14px;font-size:12px;">🏆 Success</button>
+              <button class="btn btn-ghost" onclick="loadBQ('random')" style="padding:8px 14px;font-size:12px;background:var(--fog2);">🎲 Random</button>
+            </div>
+            <div class="q-box">
+              <div class="q-tag">Behavioral Question</div>
+              <div class="q-text" id="bq-q">Select a category above to get a question</div>
+            </div>
+            <div class="field"><label>Your Answer — Use STAR Method</label>
+              <textarea id="bq-ans" placeholder="Situation: ...&#10;Task: ...&#10;Action: ...&#10;Result: ..." style="min-height:140px;"></textarea>
+            </div>
+            <button class="btn btn-dark" onclick="evalBQ()" style="padding:11px 20px;font-size:13px;">Get STAR Feedback</button>
+          </div>
+
+          <!-- MOCK -->
+          <div id="int-mock" class="ipanel">
+            <div class="field"><label>Company Type</label>
+              <select id="mock-co"><option value="startup">Startup</option><option value="tech">Big Tech (FAANG-style)</option><option value="finance">Finance / Banking</option><option value="consulting">Consulting</option></select>
+            </div>
+            <div class="field"><label>Difficulty</label>
+              <select id="mock-diff"><option value="entry">Entry Level</option><option value="mid">Mid Level</option><option value="senior">Senior</option></select>
+            </div>
+            <button class="btn btn-accent" onclick="startMock()" style="width:100%;justify-content:center;">
+              Start Mock Interview 🚀
+            </button>
+          </div>
+        </div>
+
+        <!-- Interview Output / Chat -->
+        <div>
+          <!-- Normal output for SQL/Case/Behavioral -->
+          <div id="int-output-wrap">
+            <div class="output-card">
+              <div class="output-status"><div class="output-dot"></div>AI Feedback</div>
+              <div class="loader" id="int-loader"><div class="loader-bar"></div></div>
+              <div class="output-empty" id="int-empty">
+                <div class="output-empty-icon">🎯</div>
+                <div class="output-empty-text">Submit your answer to get<br>detailed AI feedback and scoring.</div>
+              </div>
+              <div class="output-text" id="int-out"></div>
+              <div class="output-footer" style="display:none;" id="int-footer">
+                <span style="font-size:11px;color:rgba(255,255,255,0.3);">AI evaluation</span>
+                <button class="output-copy" onclick="cp('int-out')">Copy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mock Chat -->
+          <div id="mock-chat-wrap" style="display:none;">
+            <div class="chat-box">
+              <div class="chat-header">
+                <div class="chat-avatar">🤖</div>
+                <div>
+                  <div class="chat-name">DataPath Interviewer</div>
+                  <div class="chat-status" id="chat-status">Ready to begin</div>
+                </div>
+              </div>
+              <div class="chat-messages" id="chat-msgs"></div>
+              <div class="loader" id="mock-loader" style="margin:0;border-radius:0;"><div class="loader-bar"></div></div>
+              <div class="chat-input-row">
+                <textarea class="chat-input" id="mock-inp" placeholder="Type your answer..." rows="1"></textarea>
+                <button class="chat-send" onclick="sendMock()">↑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="pricing-section">
+    <div class="pricing-inner">
+      <div class="pricing-label">Simple Pricing</div>
+      <div class="pricing-title">Invest in your<br>career. <em>Get hired.</em></div>
+      <div class="plans">
+        <div class="plan" onclick="pay('monthly')">
+          <div class="plan-name">Monthly</div>
+          <div class="plan-price"><sup>₹</sup>499</div>
+          <div class="plan-period">per month · cancel anytime</div>
+          <ul class="plan-features">
+            <li>AI Roadmap Generator</li>
+            <li>Resume Optimizer</li>
+            <li>Mock Interview Coach</li>
+            <li>ATS Keyword Analyzer</li>
+            <li>Bullet Point Rewriter</li>
+          </ul>
+          <button class="plan-btn">Get Monthly Access</button>
+        </div>
+
+        <div class="plan featured" onclick="pay('yearly')">
+          <div class="plan-tag">Best Value</div>
+          <div class="plan-name">Yearly</div>
+          <div class="plan-price"><sup>₹</sup>2,999</div>
+          <div class="plan-period">per year · save ₹2,989</div>
+          <ul class="plan-features">
+            <li>Everything in Monthly</li>
+            <li>Priority support</li>
+            <li>Early access to Phase 2</li>
+            <li>Company-specific prep</li>
+            <li>Progress dashboard</li>
+          </ul>
+          <button class="plan-btn plan-featured-btn">Get Yearly Access</button>
+        </div>
+
+        <div class="plan" onclick="pay('lifetime')">
+          <div class="plan-name">Lifetime</div>
+          <div class="plan-price"><sup>₹</sup>1,999</div>
+          <div class="plan-period">one-time · forever</div>
+          <ul class="plan-features">
+            <li>Everything in Monthly</li>
+            <li>Lifetime access</li>
+            <li>All future Phase updates</li>
+            <li>Founding member badge</li>
+            <li>Direct founder support</li>
+          </ul>
+          <button class="plan-btn">Get Lifetime Access</button>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:40px;font-size:13px;color:rgba(255,255,255,0.3);">
+        🔒 Secure payments via Razorpay · UPI, Cards, Netbanking, Paytm accepted
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav">
+  <div class="mob-nav-inner">
+    <button class="mob-tab active" onclick="goTo('hero');mobTab(this)"><span class="mob-tab-icon">🏠</span>Home</button>
+    <button class="mob-tab" onclick="goTo('tools');mobTab(this)"><span class="mob-tab-icon">🛠️</span>Tools</button>
+    <button class="mob-tab" onclick="goTo('pricing');mobTab(this)"><span class="mob-tab-icon">💳</span>Pricing</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  CONFIG — Replace with your backend URL
+// ══════════════════════════════════════════
+const API = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : 'https://YOUR-BACKEND-URL.com';
+
+// ── NAV ──────────────────────────────────
+function goTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.nav-link').forEach((l,i) => {
+    l.classList.toggle('active', ['hero','tools','pricing'][i] === id);
+  });
+}
+function mobTab(el) {
+  document.querySelectorAll('.mob-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── TOOL SWITCHER ─────────────────────────
+function switchTool(t) {
+  ['roadmap','resume','interview'].forEach(n => {
+    document.getElementById('tool-'+n).classList.toggle('active', n===t);
+  });
+  document.querySelectorAll('.tool-tab').forEach((el,i) => {
+    el.classList.toggle('active', ['roadmap','resume','interview'][i]===t);
+  });
+  // Reset mock chat when switching away from interview
+  if (t !== 'interview') resetMockUI();
+}
+
+function switchResume(t) {
+  ['optimizer','keywords','bullets'].forEach(n => {
+    document.getElementById('res-'+n).classList.toggle('active', n===t);
+  });
+  document.querySelectorAll('#tool-resume .itab').forEach((el,i) => {
+    el.classList.toggle('active', ['optimizer','keywords','bullets'][i]===t);
+  });
+}
+
+function switchInt(t) {
+  ['sql','case','behavioral','mock'].forEach(n => {
+    document.getElementById('int-'+n).classList.toggle('active', n===t);
+  });
+  document.querySelectorAll('#tool-interview .itab').forEach((el,i) => {
+    el.classList.toggle('active', ['sql','case','behavioral','mock'][i]===t);
+  });
+  const isMock = t === 'mock';
+  document.getElementById('mock-chat-wrap').style.display = isMock && mockStarted ? 'block' : 'none';
+  document.getElementById('int-output-wrap').style.display = isMock ? 'none' : 'block';
+}
+
+// ── HELPERS ───────────────────────────────
+function tog(el) { el.classList.toggle('on'); }
+
+function getChips(id) {
+  return [...document.querySelectorAll(`#${id} .chip.on`)].map(e=>e.textContent).join(', ') || 'None';
+}
+
+function showLoad(id) { document.getElementById(id+'-loader').classList.add('on'); }
+function hideLoad(id) { document.getElementById(id+'-loader').classList.remove('on'); }
+
+function showResult(prefix, text) {
+  hideLoad(prefix);
+  document.getElementById(prefix+'-empty').style.display = 'none';
+  const out = document.getElementById(prefix+'-out');
+  out.textContent = text; out.classList.add('show');
+  document.getElementById(prefix+'-footer').style.display = 'flex';
+}
+
+function showIntResult(text) {
+  hideLoad('int');
+  document.getElementById('int-empty').style.display = 'none';
+  const out = document.getElementById('int-out');
+  out.textContent = text; out.classList.add('show');
+  document.getElementById('int-footer').style.display = 'flex';
+}
+
+function cp(id) {
+  navigator.clipboard.writeText(document.getElementById(id).textContent || '')
+    .then(() => toast('Copied to clipboard!','ok'));
+}
+
+function toast(msg, type='ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = `toast ${type} show`;
+  setTimeout(() => el.className = 'toast', 3000);
+}
+
+// ── AI CALL ───────────────────────────────
+async function ai(prompt, sys) {
+  const token = localStorage.getItem('dp_token') || '';
+  const body = { messages:[{role:'user',content:prompt}], max_tokens:1000 };
+  if (sys) body.system = sys;
+  const r = await fetch(`${API}/api/ai`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-auth-token':token},
+    body:JSON.stringify(body)
+  });
+  const d = await r.json();
+  if (d.error) throw new Error(d.error);
+  return d.text;
+}
+
+// Direct Claude call (for local testing without backend)
+async function aiDirect(prompt, sys) {
+  const body = {
+    model:'claude-sonnet-4-20250514', max_tokens:1000,
+    messages:[{role:'user',content:prompt}]
+  };
+  if (sys) body.system = sys;
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  const d = await r.json();
+  return d.content?.map(b=>b.text||'').join('') || 'Error';
+}
+
+async function callAI(prompt, sys) {
+  try { return await ai(prompt, sys); }
+  catch(e) { return await aiDirect(prompt, sys); }
+}
+
+// ══════════════════════════════════════════
+//  TOOL 1 — ROADMAP
+// ══════════════════════════════════════════
+async function genRoadmap() {
+  const level = document.getElementById('rm-level').value;
+  const role  = document.getElementById('rm-role').value;
+  const time  = document.getElementById('rm-timeline').value;
+  const skills = getChips('rm-chips');
+  showLoad('rm');
+  document.getElementById('rm-empty').style.display = 'none';
+  try {
+    const text = await callAI(
+      `Create a practical week-by-week learning roadmap.\n\nLevel: ${level}\nTarget Role: ${role}\nTimeline: ${time}\nCurrent Skills: ${skills}\n\nProvide 4-5 phases. Each phase: name + duration, what to learn (specific tools/topics), 2 free resources, 1 hands-on project, skills at phase end.\n\nBe specific, practical, and India job-market focused. End with 3 career tips.`
+    );
+    showResult('rm', text);
+  } catch(e) { hideLoad('rm'); toast('AI error — try again','err'); }
+}
+
+// ══════════════════════════════════════════
+//  TOOL 2 — RESUME
+// ══════════════════════════════════════════
+async function optimizeResume() {
+  const cv  = document.getElementById('res-cv').value;
+  const jd  = document.getElementById('res-jd').value;
+  const exp = document.getElementById('res-exp').value;
+  if (!cv.trim() && !jd.trim()) { toast('Paste your resume or JD first','err'); return; }
+  showLoad('res');
+  document.getElementById('res-empty').style.display = 'none';
+  try {
+    const text = await callAI(
+      `Optimize this resume for ATS and the job description.\n\nExperience: ${exp} years\nResume: ${cv||'Not provided'}\nJob Description: ${jd||'Generic Data Analyst role'}\n\nTasks:\n1. Rewrite bullets with strong verbs and impact metrics (%, numbers, ₹)\n2. Write a 3-line professional summary\n3. List 5 skills to add\n4. Give ATS match score out of 100 with reasoning\n\nBe specific and practical.`
+    );
+    showResult('res', text);
+  } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
+}
+
+async function analyzeATS() {
+  const jd = document.getElementById('ats-jd').value;
+  if (!jd.trim()) { toast('Paste a job description first','err'); return; }
+  showLoad('res');
+  document.getElementById('res-empty').style.display = 'none';
+  try {
+    const text = await callAI(
+      `Analyze this JD for ATS keywords.\n\nJD: ${jd}\nResume: ${document.getElementById('ats-cv').value||'Not provided'}\n\nProvide: 10 must-have keywords, 5 secondary keywords, which are missing from resume, ATS match score, 3 specific improvement tips.`
+    );
+    showResult('res', text);
+  } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
+}
+
+async function rewriteBullets() {
+  const bullets = document.getElementById('bul-in').value;
+  const level   = document.getElementById('bul-lvl').value;
+  if (!bullets.trim()) { toast('Paste your bullet points first','err'); return; }
+  showLoad('res');
+  document.getElementById('res-empty').style.display = 'none';
+  try {
+    const text = await callAI(
+      `Rewrite these ${level}-level resume bullets for a data analyst role. Use strong action verbs, add impact metrics (even estimated), include technical keywords.\n\nOriginal bullets:\n${bullets}\n\nShow: Original → Rewritten for each. Then list all power bullets ready to copy.`
+    );
+    showResult('res', text);
+  } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
+}
+
+// ══════════════════════════════════════════
+//  TOOL 3 — INTERVIEW
+// ══════════════════════════════════════════
+
+// SQL
+let sqlIdx=0, sqlAtt=0, sqlCor=0;
+const sqlQs = [
+  { q:`You have a table <span class="q-code">orders(order_id, customer_id, amount, created_at)</span>.<br><br>Write a query to find customers with more than 3 orders AND total spend over $500, ordered by total spend descending.`, d:'Intermediate' },
+  { q:`From a <span class="q-code">user_events(user_id, event_type, event_date)</span> table, find users who did 'sign_up' but NEVER did 'purchase' within 30 days of signing up.`, d:'Advanced' },
+  { q:`Calculate month-over-month growth % of new users for the last 6 months. Table: <span class="q-code">users(user_id, signup_date)</span>. Include previous month count, current count, and growth %.`, d:'Advanced' }
+];
+
+async function checkSQL() {
+  const ans = document.getElementById('sql-ans').value;
+  if (!ans.trim()) { toast('Write a query first','err'); return; }
+  sqlAtt++;
+  showLoad('int');
+  document.getElementById('int-empty').style.display = 'none';
+  try {
+    const text = await callAI(`Evaluate this SQL answer.\n\nQuestion: ${sqlQs[sqlIdx].q.replace(/<[^>]*>/g,'')}\nAnswer: ${ans}\n\nScore out of 10. Check: correctness, efficiency, style. Then show the ideal solution with explanation. Be encouraging but honest.`);
+    if (/[89]\/10|10\/10|correct|good/i.test(text)) sqlCor++;
+    updateSQL(); showIntResult(text);
+  } catch(e) { hideLoad('int'); toast('AI error — try again','err'); }
+}
+
+function sqlHint() {
+  const hints = [
+    'Use GROUP BY + HAVING COUNT(*) > 3 AND SUM(amount) > 500',
+    'Think about NOT EXISTS with a subquery filtering by event_type and DATE difference <= 30',
+    'Use LAG() window function to get previous month count, then (current-prev)/prev * 100'
+  ];
+  showIntResult('💡 Hint:\n\n' + hints[sqlIdx] + '\n\nTry again with this in mind!');
+}
+
+function nextSQL() {
+  sqlIdx = (sqlIdx+1) % sqlQs.length;
+  document.getElementById('sql-q').innerHTML = sqlQs[sqlIdx].q;
+  document.getElementById('sql-diff').textContent = sqlQs[sqlIdx].d;
+  document.getElementById('sql-ans').value = '';
+  document.getElementById('int-out').classList.remove('show');
+  document.getElementById('int-empty').style.display = 'flex';
+  document.getElementById('int-footer').style.display = 'none';
+}
+
+function updateSQL() {
+  document.getElementById('s-att').textContent = sqlAtt;
+  document.getElementById('s-cor').textContent = sqlCor;
+  const acc = sqlAtt > 0 ? Math.round(sqlCor/sqlAtt*100) : 0;
+  document.getElementById('s-acc').textContent = sqlAtt > 0 ? acc+'%' : '—';
+  document.getElementById('s-prog').style.width = acc + '%';
+  const accEl = document.getElementById('s-acc');
+  accEl.className = 'score-num' + (acc >= 70 ? ' good' : acc > 0 ? ' bad' : '');
+}
+
+// Case
+const caseQs = [
+  "Your company's DAU dropped 15% last Tuesday. The CEO needs an explanation by end of day. Walk through your complete analysis framework.",
+  "Revenue fell 20% in Q4 despite user numbers growing 10%. How do you investigate this paradox?",
+  "Churn rate increased 8% this month with no obvious cause. How do you find out why and what to do?"
+];
+let caseIdx = 0;
+
+async function evalCase() {
+  const ans = document.getElementById('case-ans').value;
+  if (!ans.trim()) { toast('Write your approach first','err'); return; }
+  showLoad('int');
+  document.getElementById('int-empty').style.display = 'none';
+  try {
+    const text = await callAI(`Evaluate this case study answer. Score each dimension 1-5: Problem Framing, Hypothesis Generation, Data Approach, Communication, Business Acumen.\n\nCase: ${document.getElementById('case-q').textContent}\nAnswer: ${ans}\n\nGive total /25, 3 strengths, 3 improvements, and a model answer outline.`);
+    showIntResult(text);
+  } catch(e) { hideLoad('int'); toast('AI error — try again','err'); }
+}
+
+function caseHint() {
+  showIntResult(`📋 DACI Framework for Metric Drops:\n\n1. CLARIFY FIRST\n• Which platform / device / region?\n• New vs returning users?\n• Any recent product changes or deploys?\n\n2. SEGMENT THE DROP\n• New users vs returning\n• By platform, geography, cohort\n• Funnel: fewer sessions or shorter sessions?\n\n3. HYPOTHESES\n• Technical: tracking bug, broken feature\n• Product: A/B test, UI change\n• External: competitor, news, seasonal\n\n4. DATA TO CHECK\n• Error logs + crash reports\n• App store reviews\n• Login / signup funnel\n• Push notification delivery\n\n5. COMMUNICATE\n• Lead with most likely hypothesis\n• State what confirms/denies it\n• Give timeline for full answer`);
+}
+
+function newCase() {
+  caseIdx = (caseIdx+1) % caseQs.length;
+  document.getElementById('case-q').textContent = caseQs[caseIdx];
+  document.getElementById('case-ans').value = '';
+  document.getElementById('int-out').classList.remove('show');
+  document.getElementById('int-empty').style.display = 'flex';
+  document.getElementById('int-footer').style.display = 'none';
+}
+
+// Behavioral
+const bqMap = {
+  conflict:   "Tell me about a time you disagreed with a stakeholder on how to interpret data or present findings. How did you resolve it?",
+  leadership: "Describe a time you took initiative on a data project without being asked. What was the outcome?",
+  failure:    "Tell me about a data analysis you got wrong. How did you discover the mistake and what did you do?",
+  success:    "Walk me through your proudest data project — the problem, your approach, and the business outcome.",
+  stakeholder:"Describe a time you explained complex data findings to a non-technical audience."
+};
+
+function loadBQ(type) {
+  const keys = Object.keys(bqMap);
+  const q = type === 'random' ? bqMap[keys[Math.floor(Math.random()*keys.length)]] : bqMap[type];
+  document.getElementById('bq-q').textContent = q || 'Select a category';
+  document.getElementById('bq-ans').value = '';
+  document.getElementById('int-out').classList.remove('show');
+  document.getElementById('int-empty').style.display = 'flex';
+}
+
+async function evalBQ() {
+  const q = document.getElementById('bq-q').textContent;
+  const ans = document.getElementById('bq-ans').value;
+  if (!ans.trim() || q.includes('Select')) { toast('Pick a question and write your answer first','err'); return; }
+  showLoad('int');
+  document.getElementById('int-empty').style.display = 'none';
+  try {
+    const text = await callAI(`Evaluate this behavioral answer using STAR. Score each (1-5): Situation, Task, Action, Result.\n\nQ: ${q}\nA: ${ans}\n\nTotal /20, strengths, weaknesses, rewrite the weakest section.`);
+    showIntResult(text);
+  } catch(e) { hideLoad('int'); toast('AI error — try again','err'); }
+}
+
+// Mock Interview
+let mockHistory = [], mockStarted = false;
+
+function resetMockUI() {
+  document.getElementById('mock-chat-wrap').style.display = 'none';
+  document.getElementById('int-output-wrap').style.display = 'block';
+}
+
+async function startMock() {
+  const co   = document.getElementById('mock-co').value;
+  const diff = document.getElementById('mock-diff').value;
+  mockHistory = []; mockStarted = true;
+
+  document.getElementById('mock-chat-wrap').style.display = 'block';
+  document.getElementById('int-output-wrap').style.display = 'none';
+  document.getElementById('chat-msgs').innerHTML = '';
+  document.getElementById('chat-status').textContent = 'Interview in progress';
+  addChatMsg('sys', '🎙️ Interview started. Type your answers below.');
+
+  document.getElementById('mock-loader').classList.add('on');
+  try {
+    const text = await callAI(
+      `Start a ${diff}-level data analyst mock interview for a ${co}. Introduce yourself briefly as the interviewer, then ask your first question. Mix SQL, analytics thinking, and behavioral questions naturally. Keep it realistic.`
+    );
+    document.getElementById('mock-loader').classList.remove('on');
+    addChatMsg('ai', text);
+    mockHistory.push({ role:'assistant', content:text });
+  } catch(e) {
+    document.getElementById('mock-loader').classList.remove('on');
+    toast('Could not start interview','err');
+  }
+}
+
+async function sendMock() {
+  const inp = document.getElementById('mock-inp');
+  const txt = inp.value.trim();
+  if (!txt || !mockStarted) return;
+  inp.value = '';
+  addChatMsg('user', txt);
+  mockHistory.push({ role:'user', content:txt });
+  document.getElementById('mock-loader').classList.add('on');
+  try {
+    const text = await callAI(
+      mockHistory.map(m=>`${m.role==='user'?'Candidate':'Interviewer'}: ${m.content}`).join('\n\n') +
+      '\n\nRespond as the interviewer: give 1-2 lines of feedback, then ask the next question. After 5+ exchanges, offer a full debrief.',
+      'You are a professional data analyst interviewer. Be realistic, probe answers, and give useful feedback.'
+    );
+    document.getElementById('mock-loader').classList.remove('on');
+    addChatMsg('ai', text);
+    mockHistory.push({ role:'assistant', content:text });
+  } catch(e) {
+    document.getElementById('mock-loader').classList.remove('on');
+    toast('AI error','err');
+  }
+}
+
+function addChatMsg(role, text) {
+  const c = document.getElementById('chat-msgs');
+  const d = document.createElement('div');
+  d.className = { sys:'msg-sys', user:'msg-user', ai:'msg-ai' }[role];
+  d.textContent = text;
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key==='Enter' && !e.shiftKey && document.activeElement===document.getElementById('mock-inp')) {
+    e.preventDefault(); sendMock();
+  }
+});
+
+// ── PAYMENT ──────────────────────────────
+function pay(plan) {
+  const prices = { monthly:'₹499/month', yearly:'₹2,999/year', lifetime:'₹1,999 one-time' };
+  toast(`Redirecting to ${prices[plan]} payment...`, 'inf');
+  // Connect your Razorpay here after backend is deployed
+  setTimeout(() => window.open('https://razorpay.com','_blank'), 1000);
+}
+</script>
+</body>
+</html>
