@@ -619,8 +619,8 @@ nav {
     <button class="nav-link" onclick="goTo('tools')">Tools <span class="nav-badge">AI</span></button>
     <button class="nav-link" onclick="goTo('pricing')">Pricing</button>
   </div>
-  <button class="btn btn-dark" style="padding:10px 22px;font-size:13px;" onclick="goTo('pricing')">
-    Get Access →
+  <button class="btn btn-dark" style="padding:10px 22px;font-size:13px;" onclick="goTo('tools')">
+    Try Free Now 🎉
   </button>
 </nav>
 
@@ -630,12 +630,12 @@ nav {
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">Phase 1 — Now Live</div>
+      <div class="hero-eyebrow">🎉 Free Beta — Limited Spots</div>
       <h1>Get Hired<br>as a <em>Data</em><br><em>Analyst.</em></h1>
       <p class="hero-sub">Roadmap. Resume. Interview prep. Three AI-powered tools built specifically for data analysts in India.</p>
       <div class="hero-actions">
         <button class="btn btn-dark" onclick="goTo('tools')">Try the Tools ↓</button>
-        <button class="btn btn-ghost" onclick="goTo('pricing')">See Pricing</button>
+        <button class="btn btn-ghost" onclick="goTo('pricing')">🎉 Free Beta — See Details</button>
       </div>
     </div>
     <div class="hero-stats">
@@ -644,8 +644,8 @@ nav {
         <div class="stat-desc">Average Rating</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val">₹<span>499</span></div>
-        <div class="stat-desc">Per Month Only</div>
+        <div class="stat-val" style="color:var(--accent);">Free</div>
+        <div class="stat-desc">Beta Access Now 🎉</div>
       </div>
       <div class="stat-card">
         <div class="stat-val">90<span>d</span></div>
@@ -922,11 +922,28 @@ nav {
     <div class="pricing-inner">
       <div class="pricing-label">Simple Pricing</div>
       <div class="pricing-title">Invest in your<br>career. <em>Get hired.</em></div>
+
+      <!-- FREE BETA BANNER -->
+      <div style="background:linear-gradient(135deg,rgba(200,168,75,0.15),rgba(255,77,28,0.1));border:1px solid rgba(200,168,75,0.4);border-radius:14px;padding:20px 28px;margin-bottom:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="background:var(--gold);color:var(--ink);font-size:11px;font-weight:800;padding:5px 12px;border-radius:6px;letter-spacing:1px;white-space:nowrap;">🎉 FREE BETA</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:white;">All tools are 100% FREE right now!</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:3px;">You are an early beta user — no payment needed. Paid plans launch soon.</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);text-align:right;">
+          <span style="color:var(--gold);font-weight:700;" id="beta-count">🔥 Limited beta spots</span><br>
+          <span style="font-size:11px;">Lock in free access before paid launch</span>
+        </div>
+      </div>
+
       <div class="plans">
-        <div class="plan" onclick="pay('monthly')">
+        <div class="plan" style="opacity:0.6;cursor:default;">
+          <div class="plan-tag" style="background:rgba(255,255,255,0.15);color:white;">Coming Soon</div>
           <div class="plan-name">Monthly</div>
           <div class="plan-price"><sup>₹</sup>499</div>
-          <div class="plan-period">per month · cancel anytime</div>
+          <div class="plan-period">per month · after beta ends</div>
           <ul class="plan-features">
             <li>AI Roadmap Generator</li>
             <li>Resume Optimizer</li>
@@ -934,41 +951,52 @@ nav {
             <li>ATS Keyword Analyzer</li>
             <li>Bullet Point Rewriter</li>
           </ul>
-          <button class="plan-btn">Get Monthly Access</button>
+          <button class="plan-btn" style="cursor:default;opacity:0.5;">Available After Beta</button>
         </div>
 
-        <div class="plan featured" onclick="pay('yearly')">
-          <div class="plan-tag">Best Value</div>
-          <div class="plan-name">Yearly</div>
-          <div class="plan-price"><sup>₹</sup>2,999</div>
-          <div class="plan-period">per year · save ₹2,989</div>
+        <div class="plan featured">
+          <div class="plan-tag">🎉 Free Right Now</div>
+          <div class="plan-name">Beta Access</div>
+          <div class="plan-price" style="color:var(--gold);">Free</div>
+          <div class="plan-period">while beta lasts · no card needed</div>
           <ul class="plan-features">
-            <li>Everything in Monthly</li>
-            <li>Priority support</li>
-            <li>Early access to Phase 2</li>
-            <li>Company-specific prep</li>
-            <li>Progress dashboard</li>
+            <li>All 3 AI Tools Unlocked</li>
+            <li>Unlimited Roadmaps</li>
+            <li>Resume Optimizer</li>
+            <li>Mock Interview Coach</li>
+            <li>Founding Member Status 🏅</li>
           </ul>
-          <button class="plan-btn plan-featured-btn">Get Yearly Access</button>
+          <button class="plan-btn plan-featured-btn" onclick="scrollToTools()">Use Free Now →</button>
         </div>
 
-        <div class="plan" onclick="pay('lifetime')">
+        <div class="plan" style="opacity:0.6;cursor:default;">
+          <div class="plan-tag" style="background:rgba(255,255,255,0.15);color:white;">Coming Soon</div>
           <div class="plan-name">Lifetime</div>
           <div class="plan-price"><sup>₹</sup>1,999</div>
-          <div class="plan-period">one-time · forever</div>
+          <div class="plan-period">one-time · after beta ends</div>
           <ul class="plan-features">
             <li>Everything in Monthly</li>
-            <li>Lifetime access</li>
-            <li>All future Phase updates</li>
+            <li>Lifetime access forever</li>
+            <li>All future updates</li>
             <li>Founding member badge</li>
             <li>Direct founder support</li>
           </ul>
-          <button class="plan-btn">Get Lifetime Access</button>
+          <button class="plan-btn" style="cursor:default;opacity:0.5;">Available After Beta</button>
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:40px;font-size:13px;color:rgba(255,255,255,0.3);">
-        🔒 Secure payments via Razorpay · UPI, Cards, Netbanking, Paytm accepted
+      <div style="text-align:center;margin-top:36px;">
+        <div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:16px;">
+          🚀 Using it for free now? <strong style="color:white;">Share with 1 friend</strong> who needs it — that's all we ask!
+        </div>
+        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+          <button onclick="shareWhatsApp()" style="padding:11px 22px;border-radius:9px;border:1px solid rgba(255,255,255,0.15);background:rgba(37,211,102,0.15);color:#25d366;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">
+            📱 Share on WhatsApp
+          </button>
+          <button onclick="shareLinkedIn()" style="padding:11px 22px;border-radius:9px;border:1px solid rgba(255,255,255,0.15);background:rgba(10,102,194,0.15);color:#0a66c2;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">
+            💼 Share on LinkedIn
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1360,11 +1388,22 @@ document.addEventListener('keydown', e => {
 });
 
 // ── PAYMENT ──────────────────────────────
+function scrollToTools() {
+  goTo('tools');
+}
+
+function shareWhatsApp() {
+  const msg = encodeURIComponent(`🚀 Bhai ye tool try karo — bilkul FREE hai!\n\nDataPath AI — Data Analyst job ke liye:\n✅ AI Roadmap Generator\n✅ Resume Optimizer\n✅ Mock Interview Coach\n\nAbhi Free Beta chal raha hai 👇\nhttps://ayush123ak.github.io/datapath-ai/`);
+  window.open(`https://wa.me/?text=${msg}`, '_blank');
+}
+
+function shareLinkedIn() {
+  const url = encodeURIComponent('https://ayush123ak.github.io/datapath-ai/');
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+}
+
 function pay(plan) {
-  const prices = { monthly:'₹499/month', yearly:'₹2,999/year', lifetime:'₹1,999 one-time' };
-  toast(`Redirecting to ${prices[plan]} payment...`, 'inf');
-  // Connect your Razorpay here after backend is deployed
-  setTimeout(() => window.open('https://razorpay.com','_blank'), 1000);
+  toast('🎉 Abhi FREE Beta hai — koi payment nahi chahiye!', 'ok');
 }
 </script>
 </body>
