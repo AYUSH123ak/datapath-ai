@@ -8,918 +8,463 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 :root{
-  --bg:       #080612;
-  --bg2:      #0e0a1f;
-  --bg3:      #130d2a;
-  --purple:   #7c3aed;
-  --purple2:  #9d5ff5;
-  --purple3:  #c084fc;
-  --silver:   #e2e8f0;
-  --silver2:  #94a3b8;
-  --silver3:  #cbd5e1;
-  --cyan:     #22d3ee;
-  --pink:     #f472b6;
-  --gold:     #fbbf24;
-  --white:    #f8fafc;
-  --border:   rgba(124,58,237,0.2);
-  --border2:  rgba(124,58,237,0.08);
-  --glow:     rgba(124,58,237,0.4);
+  --bg:#080612; --bg2:#0e0a1f; --bg3:#130d2a;
+  --purple:#7c3aed; --purple2:#9d5ff5; --purple3:#c084fc;
+  --silver:#e2e8f0; --silver2:#94a3b8; --silver3:#cbd5e1;
+  --cyan:#22d3ee; --pink:#f472b6; --gold:#fbbf24; --white:#f8fafc;
+  --border:rgba(124,58,237,0.2); --border2:rgba(124,58,237,0.08); --glow:rgba(124,58,237,0.4);
+  /* Phase colors */
+  --ph1:#22d3ee; --ph2:#c084fc; --ph3:#fbbf24; --ph4:#f472b6; --ph5:#34d399;
 }
-
 html{scroll-behavior:smooth;}
-
-body{
-  font-family:'Rajdhani',sans-serif;
-  background:var(--bg);
-  color:var(--silver);
-  overflow-x:hidden;
-  cursor:none;
-}
-
-/* CUSTOM CURSOR */
-.cursor{
-  width:8px;height:8px;
-  background:var(--purple3);
-  border-radius:50%;
-  position:fixed;z-index:9999;
-  pointer-events:none;
-  transition:transform 0.1s;
-  box-shadow:0 0 12px var(--purple3);
-}
-.cursor-ring{
-  width:32px;height:32px;
-  border:1px solid rgba(192,132,252,0.4);
-  border-radius:50%;
-  position:fixed;z-index:9998;
-  pointer-events:none;
-  transition:all 0.15s ease;
-}
-
-/* SCANLINE OVERLAY */
-body::before{
-  content:'';
-  position:fixed;inset:0;z-index:998;
-  pointer-events:none;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(124,58,237,0.015) 2px,
-    rgba(124,58,237,0.015) 4px
-  );
-}
-
-/* GRID BG */
-body::after{
-  content:'';
-  position:fixed;inset:0;z-index:0;
-  pointer-events:none;
-  background-image:
-    linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
-}
-
-/* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 48px;
-  background:rgba(8,6,18,0.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-
-nav::after{
-  content:'';
-  position:absolute;bottom:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--purple),transparent);
-}
-
-.nav-logo{
-  font-family:'Orbitron',sans-serif;
-  font-size:15px;font-weight:800;
-  letter-spacing:2px;text-transform:uppercase;
-  display:flex;align-items:center;gap:10px;
-  color:var(--white);
-}
-
-.nav-logo-mark{
-  width:32px;height:32px;
-  background:linear-gradient(135deg,var(--purple),var(--purple3));
-  border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;
-  box-shadow:0 0 16px var(--glow);
-}
-
-.nav-links{
-  display:flex;align-items:center;gap:2px;
-  background:rgba(124,58,237,0.08);
-  border:1px solid var(--border);
-  border-radius:10px;padding:4px;
-}
-
-.nav-link{
-  padding:8px 20px;border-radius:7px;cursor:none;
-  font-family:'Rajdhani',sans-serif;
-  font-size:13px;font-weight:600;
-  letter-spacing:1px;text-transform:uppercase;
-  color:var(--silver2);transition:all 0.2s;
-  border:none;background:none;
-}
-.nav-link.active{
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  color:white;
-  box-shadow:0 0 20px rgba(124,58,237,0.5);
-}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--silver);overflow-x:hidden;cursor:none;}
+.cursor{width:8px;height:8px;background:var(--purple3);border-radius:50%;position:fixed;z-index:9999;pointer-events:none;transition:transform 0.1s;box-shadow:0 0 12px var(--purple3);}
+.cursor-ring{width:32px;height:32px;border:1px solid rgba(192,132,252,0.4);border-radius:50%;position:fixed;z-index:9998;pointer-events:none;transition:all 0.15s ease;}
+body::before{content:'';position:fixed;inset:0;z-index:998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(124,58,237,0.015) 2px,rgba(124,58,237,0.015) 4px);}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(124,58,237,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.06) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(8,6,18,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--purple),transparent);}
+.nav-logo{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:800;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:10px;color:var(--white);}
+.nav-logo-mark{width:32px;height:32px;background:linear-gradient(135deg,var(--purple),var(--purple3));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 16px var(--glow);}
+.nav-links{display:flex;align-items:center;gap:2px;background:rgba(124,58,237,0.08);border:1px solid var(--border);border-radius:10px;padding:4px;}
+.nav-link{padding:8px 20px;border-radius:7px;cursor:none;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--silver2);transition:all 0.2s;border:none;background:none;}
+.nav-link.active{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;box-shadow:0 0 20px rgba(124,58,237,0.5);}
 .nav-link:hover:not(.active){color:var(--purple3);}
-
-.nav-badge{
-  font-size:9px;font-weight:700;
-  background:var(--cyan);color:var(--bg);
-  padding:2px 6px;border-radius:4px;
-  margin-left:4px;letter-spacing:1px;
-}
-
-.btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:12px 24px;border-radius:8px;
-  font-family:'Rajdhani',sans-serif;
-  font-size:13px;font-weight:700;
-  letter-spacing:1.5px;text-transform:uppercase;
-  cursor:none;transition:all 0.2s;border:none;
-}
-
-.btn-primary{
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  color:white;
-  box-shadow:0 0 24px rgba(124,58,237,0.4);
-  position:relative;overflow:hidden;
-}
-.btn-primary::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--purple2),var(--purple3));
-  opacity:0;transition:opacity 0.2s;
-}
+.nav-badge{font-size:9px;font-weight:700;background:var(--cyan);color:var(--bg);padding:2px 6px;border-radius:4px;margin-left:4px;letter-spacing:1px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:all 0.2s;border:none;}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;box-shadow:0 0 24px rgba(124,58,237,0.4);position:relative;overflow:hidden;}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--purple2),var(--purple3));opacity:0;transition:opacity 0.2s;}
 .btn-primary:hover::before{opacity:1;}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(124,58,237,0.6);}
-
-.btn-outline{
-  background:transparent;color:var(--purple3);
-  border:1px solid var(--border);
-}
+.btn-outline{background:transparent;color:var(--purple3);border:1px solid var(--border);}
 .btn-outline:hover{border-color:var(--purple3);background:rgba(124,58,237,0.1);box-shadow:0 0 20px rgba(124,58,237,0.2);}
-
-.btn-cyan{
-  background:linear-gradient(135deg,#0891b2,var(--cyan));
-  color:var(--bg);font-weight:800;
-  box-shadow:0 0 24px rgba(34,211,238,0.3);
-}
+.btn-cyan{background:linear-gradient(135deg,#0891b2,var(--cyan));color:var(--bg);font-weight:800;box-shadow:0 0 24px rgba(34,211,238,0.3);}
 .btn-cyan:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(34,211,238,0.5);}
-
-/* HERO */
-.hero{
-  min-height:100vh;
-  display:flex;align-items:center;
-  padding:120px 48px 80px;
-  position:relative;overflow:hidden;
-}
-
-.hero-orb1{
-  position:absolute;
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);
-  top:-100px;right:-100px;
-  animation:float1 8s ease-in-out infinite;
-}
-.hero-orb2{
-  position:absolute;
-  width:400px;height:400px;
-  background:radial-gradient(circle,rgba(34,211,238,0.08) 0%,transparent 70%);
-  bottom:0;left:-50px;
-  animation:float2 10s ease-in-out infinite;
-}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
+.hero-orb1{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);top:-100px;right:-100px;animation:float1 8s ease-in-out infinite;}
+.hero-orb2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(34,211,238,0.08) 0%,transparent 70%);bottom:0;left:-50px;animation:float2 10s ease-in-out infinite;}
 @keyframes float1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,30px);}}
 @keyframes float2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-20px);}}
-
 .hero-content{position:relative;z-index:1;max-width:700px;}
-
-.hero-tag{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;font-weight:400;
-  color:var(--cyan);letter-spacing:2px;
-  border:1px solid rgba(34,211,238,0.25);
-  padding:6px 14px;border-radius:4px;
-  background:rgba(34,211,238,0.05);
-  margin-bottom:32px;
-}
-.hero-tag::before{
-  content:'';width:6px;height:6px;
-  background:var(--cyan);border-radius:50%;
-  box-shadow:0 0 8px var(--cyan);
-  animation:blink 1.5s infinite;
-}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:400;color:var(--cyan);letter-spacing:2px;border:1px solid rgba(34,211,238,0.25);padding:6px 14px;border-radius:4px;background:rgba(34,211,238,0.05);margin-bottom:32px;}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:blink 1.5s infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
-
-.hero h1{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(36px,6vw,72px);
-  font-weight:900;line-height:1.0;
-  letter-spacing:-1px;
-  margin-bottom:24px;
-  color:var(--white);
-}
-
-.hero h1 .line2{
-  background:linear-gradient(135deg,var(--purple3) 0%,var(--cyan) 50%,var(--pink) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  filter:drop-shadow(0 0 20px rgba(124,58,237,0.5));
-}
-
-.hero-sub{
-  font-size:17px;color:var(--silver2);
-  line-height:1.7;max-width:480px;
-  margin-bottom:40px;font-weight:400;
-}
-
+.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(36px,6vw,72px);font-weight:900;line-height:1.0;letter-spacing:-1px;margin-bottom:24px;color:var(--white);}
+.hero h1 .line2{background:linear-gradient(135deg,var(--purple3) 0%,var(--cyan) 50%,var(--pink) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(124,58,237,0.5));}
+.hero-sub{font-size:17px;color:var(--silver2);line-height:1.7;max-width:480px;margin-bottom:40px;font-weight:400;}
 .hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:60px;}
-
-.hero-stats{
-  display:flex;gap:32px;flex-wrap:wrap;
-}
-.stat{
-  display:flex;flex-direction:column;gap:4px;
-}
-.stat-num{
-  font-family:'Orbitron',sans-serif;
-  font-size:28px;font-weight:800;
-  color:var(--white);
-}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;gap:4px;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;color:var(--white);}
 .stat-num span{color:var(--purple3);}
 .stat-label{font-size:12px;color:var(--silver2);letter-spacing:1px;text-transform:uppercase;}
-
-.hero-visual{
-  position:absolute;right:48px;top:50%;transform:translateY(-50%);
-  display:flex;flex-direction:column;gap:12px;
-}
-
-.holo-card{
-  background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(34,211,238,0.05));
-  border:1px solid var(--border);
-  border-radius:12px;padding:20px 24px;
-  min-width:180px;
-  backdrop-filter:blur(10px);
-  position:relative;overflow:hidden;
-}
-.holo-card::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--purple3),transparent);
-}
+.hero-visual{position:absolute;right:48px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;}
+.holo-card{background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(34,211,238,0.05));border:1px solid var(--border);border-radius:12px;padding:20px 24px;min-width:180px;backdrop-filter:blur(10px);position:relative;overflow:hidden;}
+.holo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple3),transparent);}
 .holo-card:nth-child(2){transform:translateX(24px);}
 .holo-card:nth-child(3){transform:translateX(12px);}
-
-.holo-val{
-  font-family:'Orbitron',sans-serif;
-  font-size:28px;font-weight:800;color:var(--white);
-  margin-bottom:4px;
-}
+.holo-val{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;color:var(--white);margin-bottom:4px;}
 .holo-val.purple{color:var(--purple3);}
 .holo-val.cyan{color:var(--cyan);}
 .holo-desc{font-size:11px;color:var(--silver2);letter-spacing:1px;text-transform:uppercase;}
-
-/* TOOLS */
-.tools-section{
-  background:var(--bg2);
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  position:relative;
-}
-
+.tools-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;}
 .tools-inner{max-width:1200px;margin:0 auto;padding:80px 48px;}
-
-.section-eyebrow{
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--purple3);
-  letter-spacing:3px;text-transform:uppercase;
-  margin-bottom:12px;
-}
-
-.section-title{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(24px,3.5vw,40px);
-  font-weight:800;color:var(--white);
-  letter-spacing:-0.5px;line-height:1.1;
-  margin-bottom:48px;
-}
-
-/* TOOL TABS */
-.tool-tabs{
-  display:flex;gap:0;
-  border:1px solid var(--border);
-  border-radius:10px;overflow:hidden;
-  background:rgba(124,58,237,0.05);
-  margin-bottom:40px;width:fit-content;
-}
-
-.tool-tab{
-  padding:14px 28px;cursor:none;
-  font-family:'Rajdhani',sans-serif;
-  font-size:13px;font-weight:700;
-  letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--silver2);transition:all 0.2s;
-  border:none;background:none;
-  border-right:1px solid var(--border);
-  display:flex;align-items:center;gap:8px;
-}
+.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--purple3);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,3.5vw,40px);font-weight:800;color:var(--white);letter-spacing:-0.5px;line-height:1.1;margin-bottom:48px;}
+.tool-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:rgba(124,58,237,0.05);margin-bottom:40px;width:fit-content;}
+.tool-tab{padding:14px 28px;cursor:none;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver2);transition:all 0.2s;border:none;background:none;border-right:1px solid var(--border);display:flex;align-items:center;gap:8px;}
 .tool-tab:last-child{border-right:none;}
-.tool-tab.active{
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  color:white;
-  box-shadow:inset 0 0 20px rgba(255,255,255,0.1);
-}
+.tool-tab.active{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;box-shadow:inset 0 0 20px rgba(255,255,255,0.1);}
 .tool-tab:hover:not(.active){color:var(--purple3);background:rgba(124,58,237,0.1);}
-
 .tool-panel{display:none;}
 .tool-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
-
-/* FORM CARD */
-.form-card{
-  background:rgba(13,10,31,0.8);
-  border:1px solid var(--border);
-  border-radius:14px;padding:28px;
-  backdrop-filter:blur(10px);
-  position:relative;overflow:hidden;
-}
-.form-card::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--purple),transparent);
-}
-
+.form-card{background:rgba(13,10,31,0.8);border:1px solid var(--border);border-radius:14px;padding:28px;backdrop-filter:blur(10px);position:relative;overflow:hidden;}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);}
 .field{margin-bottom:18px;}
-.field label{
-  display:block;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:500;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--purple3);margin-bottom:8px;
-}
-
-.field input,.field select,.field textarea{
-  width:100%;padding:11px 14px;
-  background:rgba(124,58,237,0.06);
-  border:1px solid var(--border);
-  border-radius:8px;color:var(--silver);
-  font-size:14px;font-family:'Rajdhani',sans-serif;
-  font-weight:500;
-  transition:all 0.2s;outline:none;
-  cursor:none;
-}
-.field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--purple);
-  background:rgba(124,58,237,0.1);
-  box-shadow:0 0 0 3px rgba(124,58,237,0.15),0 0 20px rgba(124,58,237,0.1);
-}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--purple3);margin-bottom:8px;}
+.field input,.field select,.field textarea{width:100%;padding:11px 14px;background:rgba(124,58,237,0.06);border:1px solid var(--border);border-radius:8px;color:var(--silver);font-size:14px;font-family:'Rajdhani',sans-serif;font-weight:500;transition:all 0.2s;outline:none;cursor:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--purple);background:rgba(124,58,237,0.1);box-shadow:0 0 0 3px rgba(124,58,237,0.15),0 0 20px rgba(124,58,237,0.1);}
 .field textarea{resize:vertical;min-height:110px;}
 .field select option{background:var(--bg2);color:var(--silver);}
-
-/* CHIPS */
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
-.chip{
-  padding:5px 12px;border-radius:5px;cursor:none;
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;font-weight:500;
-  letter-spacing:0.5px;
-  transition:all 0.15s;
-  background:rgba(124,58,237,0.08);
-  border:1px solid var(--border);
-  color:var(--silver2);
-}
-.chip.on{
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  color:white;border-color:var(--purple);
-  box-shadow:0 0 12px rgba(124,58,237,0.4);
-}
+.chip{padding:5px 12px;border-radius:5px;cursor:none;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.5px;transition:all 0.15s;background:rgba(124,58,237,0.08);border:1px solid var(--border);color:var(--silver2);}
+.chip.on{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;border-color:var(--purple);box-shadow:0 0 12px rgba(124,58,237,0.4);}
 .chip:hover:not(.on){border-color:var(--purple3);color:var(--purple3);}
-
-/* OUTPUT CARD */
-.output-card{
-  background:rgba(8,6,18,0.95);
-  border:1px solid var(--border);
-  border-radius:14px;padding:28px;
-  position:relative;overflow:hidden;
-  min-height:240px;
-  display:flex;flex-direction:column;
-  backdrop-filter:blur(10px);
-}
-.output-card::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink),var(--purple));
-  background-size:200% 100%;
-  animation:shimmer 3s linear infinite;
-}
+.output-card{background:rgba(8,6,18,0.95);border:1px solid var(--border);border-radius:14px;padding:28px;position:relative;overflow:hidden;min-height:240px;display:flex;flex-direction:column;backdrop-filter:blur(10px);}
+.output-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink),var(--purple));background-size:200% 100%;animation:shimmer 3s linear infinite;}
 @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
-
-.output-status{
-  display:flex;align-items:center;gap:8px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px;font-weight:500;
-  letter-spacing:2px;text-transform:uppercase;
-  color:rgba(124,58,237,0.6);
-  margin-bottom:20px;
-}
-.output-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--cyan);
-  box-shadow:0 0 8px var(--cyan);
-  animation:pulse 2s infinite;
-}
+.output-status{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(124,58,237,0.6);margin-bottom:20px;}
+.output-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-
-.output-empty{
-  flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;gap:12px;padding:40px 20px;
-}
+.output-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:40px 20px;}
 .output-empty-icon{font-size:40px;opacity:0.2;filter:grayscale(100%);}
-.output-empty-text{
-  font-family:'JetBrains Mono',monospace;
-  font-size:12px;color:rgba(148,163,184,0.4);
-  line-height:1.8;letter-spacing:0.5px;
-}
-
-.output-text{
-  font-family:'Rajdhani',sans-serif;
-  font-size:14px;line-height:1.8;
-  color:var(--silver3);
-  white-space:pre-wrap;flex:1;display:none;
-}
+.output-empty-text{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(148,163,184,0.4);line-height:1.8;letter-spacing:0.5px;}
+.output-text{font-family:'Rajdhani',sans-serif;font-size:14px;line-height:1.8;color:var(--silver3);white-space:pre-wrap;flex:1;display:none;}
 .output-text.show{display:block;}
-
-.output-footer{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-top:20px;padding-top:16px;
-  border-top:1px solid rgba(124,58,237,0.12);
-}
-.output-copy{
-  padding:7px 16px;border-radius:6px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:500;
-  letter-spacing:1px;cursor:none;
-  border:1px solid var(--border);
-  background:rgba(124,58,237,0.08);
-  color:var(--purple3);
-  transition:all 0.2s;
-}
+.output-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid rgba(124,58,237,0.12);}
+.output-copy{padding:7px 16px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1px;cursor:none;border:1px solid var(--border);background:rgba(124,58,237,0.08);color:var(--purple3);transition:all 0.2s;}
 .output-copy:hover{background:rgba(124,58,237,0.2);box-shadow:0 0 12px rgba(124,58,237,0.3);}
-
-/* LOADER */
 .loader{display:none;height:2px;background:rgba(124,58,237,0.1);border-radius:99px;overflow:hidden;margin:12px 0;}
 .loader.on{display:block;}
-.loader-bar{
-  height:100%;
-  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));
-  border-radius:99px;
-  animation:slide 1.8s ease-in-out infinite;
-}
+.loader-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));border-radius:99px;animation:slide 1.8s ease-in-out infinite;}
 @keyframes slide{0%{width:0%;margin-left:0%;}50%{width:60%;margin-left:20%;}100%{width:0%;margin-left:100%;}}
-
-/* INNER TABS */
 .inner-tabs-row{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
-.itab{
-  padding:6px 14px;border-radius:6px;cursor:none;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:500;
-  letter-spacing:1px;text-transform:uppercase;
-  color:var(--silver2);
-  border:1px solid var(--border);background:none;
-  transition:all 0.2s;
-}
-.itab.active{
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  color:white;border-color:var(--purple);
-  box-shadow:0 0 12px rgba(124,58,237,0.3);
-}
+.itab{padding:6px 14px;border-radius:6px;cursor:none;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--silver2);border:1px solid var(--border);background:none;transition:all 0.2s;}
+.itab.active{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;border-color:var(--purple);box-shadow:0 0 12px rgba(124,58,237,0.3);}
 .itab:hover:not(.active){color:var(--purple3);border-color:var(--purple3);}
-
 .ipanel{display:none;}
 .ipanel.active{display:block;}
-
-/* Q BOX */
-.q-box{
-  background:rgba(124,58,237,0.06);
-  border:1px solid var(--border);
-  border-radius:10px;padding:20px;
-  margin-bottom:16px;
-  position:relative;overflow:hidden;
-}
-.q-box::before{
-  content:'';position:absolute;
-  left:0;top:0;bottom:0;width:2px;
-  background:linear-gradient(180deg,var(--purple),var(--cyan));
-}
-.q-tag{
-  display:inline-block;
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px;font-weight:500;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--cyan);margin-bottom:10px;
-  border:1px solid rgba(34,211,238,0.2);
-  padding:3px 9px;border-radius:3px;
-  background:rgba(34,211,238,0.05);
-}
+.q-box{background:rgba(124,58,237,0.06);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;position:relative;overflow:hidden;}
+.q-box::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--purple),var(--cyan));}
+.q-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;border:1px solid rgba(34,211,238,0.2);padding:3px 9px;border-radius:3px;background:rgba(34,211,238,0.05);}
 .q-text{font-size:14px;font-weight:500;line-height:1.6;color:var(--silver);}
-.q-code{
-  background:rgba(124,58,237,0.15);
-  padding:2px 7px;border-radius:4px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:12px;color:var(--purple3);
-  border:1px solid var(--border);
-}
-
-/* SCORE */
+.q-code{background:rgba(124,58,237,0.15);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--purple3);border:1px solid var(--border);}
 .score-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
-.score-card{
-  background:rgba(124,58,237,0.06);
-  border:1px solid var(--border);
-  border-radius:10px;padding:14px;text-align:center;
-}
-.score-num{
-  font-family:'Orbitron',sans-serif;
-  font-size:24px;font-weight:800;color:var(--white);
-}
+.score-card{background:rgba(124,58,237,0.06);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+.score-num{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:800;color:var(--white);}
 .score-num.good{color:var(--cyan);}
 .score-num.bad{color:var(--pink);}
-.score-lbl{
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px;color:var(--silver2);
-  margin-top:4px;letter-spacing:1px;
-}
-
-/* PROGRESS */
+.score-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--silver2);margin-top:4px;letter-spacing:1px;}
 .prog-bar{height:3px;background:rgba(124,58,237,0.1);border-radius:99px;overflow:hidden;}
-.prog-fill{
-  height:100%;
-  background:linear-gradient(90deg,var(--purple),var(--cyan));
-  border-radius:99px;transition:width 0.5s ease;
-}
-
-/* CHAT */
-.chat-box{
-  background:rgba(8,6,18,0.98);
-  border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;
-  display:flex;flex-direction:column;height:480px;
-  position:relative;
-}
-.chat-box::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));
-  z-index:1;
-}
-.chat-header{
-  padding:16px 20px;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:10px;
-  background:rgba(124,58,237,0.05);
-}
-.chat-avatar{
-  width:32px;height:32px;
-  background:linear-gradient(135deg,var(--purple),var(--cyan));
-  border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;
-  box-shadow:0 0 12px rgba(124,58,237,0.4);
-}
-.chat-name{
-  font-family:'Orbitron',sans-serif;
-  font-size:12px;font-weight:700;
-  color:var(--white);letter-spacing:1px;
-}
-.chat-status{
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;color:var(--cyan);letter-spacing:1px;
-}
-.chat-messages{
-  flex:1;overflow-y:auto;padding:20px;
-  display:flex;flex-direction:column;gap:12px;
-}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:99px;transition:width 0.5s ease;}
+.chat-box{background:rgba(8,6,18,0.98);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:480px;position:relative;}
+.chat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));z-index:1;}
+.chat-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:rgba(124,58,237,0.05);}
+.chat-avatar{width:32px;height:32px;background:linear-gradient(135deg,var(--purple),var(--cyan));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 12px rgba(124,58,237,0.4);}
+.chat-name{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--white);letter-spacing:1px;}
+.chat-status{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:1px;}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;}
 .chat-messages::-webkit-scrollbar{width:3px;}
 .chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-
-.msg-ai{
-  align-self:flex-start;max-width:82%;
-  background:rgba(124,58,237,0.1);
-  border:1px solid var(--border);
-  padding:11px 14px;border-radius:10px 10px 10px 2px;
-  font-size:13px;color:var(--silver3);line-height:1.6;white-space:pre-wrap;
-}
-.msg-user{
-  align-self:flex-end;max-width:78%;
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  padding:11px 14px;border-radius:10px 10px 2px 10px;
-  font-size:13px;color:white;line-height:1.6;
-  box-shadow:0 0 16px rgba(124,58,237,0.3);
-}
-.msg-sys{
-  align-self:center;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;color:rgba(148,163,184,0.3);
-  letter-spacing:1px;padding:4px 0;
-}
-
-.chat-input-row{
-  padding:12px 16px;
-  border-top:1px solid var(--border);
-  display:flex;gap:8px;
-  background:rgba(124,58,237,0.03);
-}
-.chat-input{
-  flex:1;
-  background:rgba(124,58,237,0.06);
-  border:1px solid var(--border);
-  border-radius:8px;padding:10px 14px;
-  color:var(--silver);
-  font-size:13px;font-family:'Rajdhani',sans-serif;
-  outline:none;resize:none;
-  min-height:42px;max-height:100px;cursor:none;
-}
+.msg-ai{align-self:flex-start;max-width:82%;background:rgba(124,58,237,0.1);border:1px solid var(--border);padding:11px 14px;border-radius:10px 10px 10px 2px;font-size:13px;color:var(--silver3);line-height:1.6;white-space:pre-wrap;}
+.msg-user{align-self:flex-end;max-width:78%;background:linear-gradient(135deg,var(--purple),var(--purple2));padding:11px 14px;border-radius:10px 10px 2px 10px;font-size:13px;color:white;line-height:1.6;box-shadow:0 0 16px rgba(124,58,237,0.3);}
+.msg-sys{align-self:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(148,163,184,0.3);letter-spacing:1px;padding:4px 0;}
+.chat-input-row{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px;background:rgba(124,58,237,0.03);}
+.chat-input{flex:1;background:rgba(124,58,237,0.06);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--silver);font-size:13px;font-family:'Rajdhani',sans-serif;outline:none;resize:none;min-height:42px;max-height:100px;cursor:none;}
 .chat-input::placeholder{color:rgba(148,163,184,0.3);}
 .chat-input:focus{border-color:var(--purple);box-shadow:0 0 12px rgba(124,58,237,0.2);}
-.chat-send{
-  width:42px;height:42px;border-radius:8px;
-  background:linear-gradient(135deg,var(--purple),var(--purple2));
-  border:none;cursor:none;
-  display:flex;align-items:center;justify-content:center;
-  color:white;font-size:16px;transition:all 0.2s;flex-shrink:0;
-  box-shadow:0 0 12px rgba(124,58,237,0.3);
-}
+.chat-send{width:42px;height:42px;border-radius:8px;background:linear-gradient(135deg,var(--purple),var(--purple2));border:none;cursor:none;display:flex;align-items:center;justify-content:center;color:white;font-size:16px;transition:all 0.2s;flex-shrink:0;box-shadow:0 0 12px rgba(124,58,237,0.3);}
 .chat-send:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(124,58,237,0.5);}
 
-/* PRICING */
-.pricing-section{
-  padding:100px 48px;
-  background:var(--bg);
+/* ══════════════════════════════════════════
+   ROADMAP VISUAL CARDS — Main Feature
+══════════════════════════════════════════ */
+.rm-visual-wrap{
+  display:flex;flex-direction:column;gap:0;
+  width:100%;padding-bottom:4px;
+}
+
+/* Step connector line */
+.rm-visual-wrap .rm-phase-card:not(:last-child)::after{
+  content:'';display:block;
+  width:2px;height:16px;
+  background:linear-gradient(180deg,var(--c,var(--cyan)),transparent);
+  margin-left:22px;
+}
+
+.rm-phase-card{
+  border-radius:14px;overflow:hidden;
+  border:1px solid rgba(255,255,255,0.06);
+  transition:box-shadow 0.25s,border-color 0.25s;
   position:relative;
+  /* color set per-card via inline --c */
 }
-.pricing-inner{max-width:1100px;margin:0 auto;}
-
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-
-.plan{
-  border:1px solid var(--border);
-  border-radius:16px;padding:32px;
-  transition:all 0.2s;cursor:none;
-  position:relative;overflow:hidden;
-  background:rgba(124,58,237,0.03);
+.rm-phase-card:hover{
+  border-color:rgba(255,255,255,0.15);
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
 }
-.plan::before{
+
+/* Coloured top bar */
+.rm-phase-card::before{
   content:'';position:absolute;
-  top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--border),transparent);
-  transition:all 0.3s;
-}
-.plan:hover{
-  border-color:rgba(124,58,237,0.4);
-  background:rgba(124,58,237,0.07);
-  transform:translateY(-4px);
-  box-shadow:0 20px 40px rgba(124,58,237,0.15);
-}
-.plan:hover::before{
-  background:linear-gradient(90deg,transparent,var(--purple),transparent);
-}
-.plan.featured{
-  border-color:var(--purple);
-  background:rgba(124,58,237,0.08);
-  box-shadow:0 0 40px rgba(124,58,237,0.2);
-}
-.plan.featured::before{
-  background:linear-gradient(90deg,transparent,var(--purple3),var(--cyan),var(--purple3),transparent);
+  top:0;left:0;right:0;height:3px;
+  background:var(--c,var(--cyan));
+  opacity:0.85;
 }
 
-.plan-tag{
-  position:absolute;top:-1px;left:50%;transform:translateX(-50%);
-  background:linear-gradient(135deg,var(--purple),var(--cyan));
-  color:white;
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  padding:4px 14px;border-radius:0 0 8px 8px;
+.rm-card-header{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;cursor:pointer;
+  user-select:none;
+  background:rgba(13,10,31,0.6);
+  transition:background 0.2s;
+}
+.rm-card-header:hover{background:rgba(13,10,31,0.85);}
+
+.rm-badge{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(0,0,0,0.3);
 }
 
-.plan-name{
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:500;
-  letter-spacing:3px;text-transform:uppercase;
-  color:var(--silver2);margin-bottom:20px;margin-top:8px;
+.rm-card-meta{flex:1;min-width:0;}
+.rm-card-title{
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  color:var(--white);letter-spacing:0.5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.rm-card-sub{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--silver2);letter-spacing:1px;margin-top:2px;
 }
 
-.plan-price{
-  font-family:'Orbitron',sans-serif;
-  font-size:44px;font-weight:900;
-  color:var(--white);margin-bottom:4px;line-height:1;
-}
-.plan-price sup{font-size:18px;vertical-align:top;margin-top:10px;font-weight:600;color:var(--purple3);}
-.plan-period{
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px;color:var(--silver2);
-  margin-bottom:24px;letter-spacing:0.5px;
+.rm-dur-pill{
+  font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;
+  color:var(--bg);letter-spacing:1px;white-space:nowrap;
+  padding:4px 10px;border-radius:99px;flex-shrink:0;
+  background:var(--c,var(--cyan));
 }
 
-.plan-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
-.plan-features li{
-  font-size:13px;font-weight:500;color:var(--silver2);
-  display:flex;align-items:center;gap:8px;
+.rm-chevron{
+  font-size:10px;color:var(--silver2);
+  transition:transform 0.25s;flex-shrink:0;margin-left:4px;
 }
-.plan-features li::before{content:'▸';color:var(--purple3);font-size:10px;flex-shrink:0;}
+.rm-phase-card.open .rm-chevron{transform:rotate(180deg);}
 
-.plan-btn{
-  width:100%;padding:13px;border-radius:8px;
-  font-family:'Rajdhani',sans-serif;
-  font-size:13px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  cursor:none;
-  border:1px solid var(--border);
-  background:rgba(124,58,237,0.08);color:var(--silver2);
-  transition:all 0.2s;
+/* Body — hidden by default */
+.rm-card-body{
+  display:none;
+  background:rgba(8,6,18,0.7);
+  border-top:1px solid rgba(255,255,255,0.05);
+  padding:16px 16px 18px;
 }
-.plan-btn:hover{border-color:var(--purple3);color:var(--purple3);background:rgba(124,58,237,0.15);}
-.plan-featured-btn{
-  background:linear-gradient(135deg,var(--purple),var(--purple2)) !important;
-  color:white !important;border-color:var(--purple) !important;
-  box-shadow:0 0 24px rgba(124,58,237,0.4) !important;
-}
-.plan-featured-btn:hover{box-shadow:0 0 36px rgba(124,58,237,0.6) !important;transform:translateY(-1px);}
+.rm-card-body.open{display:block;}
 
-/* BETA BANNER */
-.beta-banner{
+/* Body sections */
+.rm-sec{margin-bottom:14px;}
+.rm-sec:last-child{margin-bottom:0;}
+.rm-sec-label{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:7px;
+  color:var(--c,var(--cyan));
+  opacity:0.8;
+}
+.rm-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.rm-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  padding:3px 9px;border-radius:4px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  color:var(--silver3);
+}
+.rm-resources{display:flex;flex-direction:column;gap:5px;}
+.rm-res-item{
+  display:flex;align-items:flex-start;gap:6px;
+  font-size:12px;color:var(--silver2);line-height:1.5;
+}
+.rm-res-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--c,var(--cyan));flex-shrink:0;margin-top:5px;
+}
+.rm-project-box{
+  border-radius:8px;padding:10px 12px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  border-left:3px solid var(--c,var(--cyan));
+  font-size:12px;color:var(--silver3);line-height:1.6;
+}
+.rm-outcome{
+  font-size:12px;color:var(--silver2);line-height:1.6;
+  padding-left:12px;border-left:2px solid rgba(255,255,255,0.1);
+  font-style:italic;
+}
+
+/* Tips card */
+.rm-tips-card{
+  border-radius:12px;
   background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(34,211,238,0.06));
-  border:1px solid rgba(124,58,237,0.3);
-  border-radius:12px;padding:20px 28px;
-  margin-bottom:40px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:16px;
+  border:1px solid rgba(124,58,237,0.25);
+  padding:16px 18px;
+  margin-top:4px;
+}
+.rm-tips-title{
+  font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;
+  color:var(--gold);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.rm-tip-row{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:12px;color:var(--silver2);
+  margin-bottom:8px;line-height:1.5;
+}
+.rm-tip-row:last-child{margin-bottom:0;}
+.rm-tip-icon{color:var(--gold);flex-shrink:0;font-size:12px;margin-top:1px;}
+
+/* Progress stepper */
+.rm-stepper{
+  display:flex;align-items:center;gap:0;
+  margin-bottom:16px;overflow:hidden;border-radius:6px;
+}
+.rm-step{
+  flex:1;height:4px;
+  background:rgba(255,255,255,0.06);
+  transition:background 0.3s;
+}
+.rm-step.done{background:var(--c2,var(--purple3));}
+
+/* ══════════════════════════════════════════
+   FEEDBACK MODAL
+══════════════════════════════════════════ */
+.fb-overlay{
+  position:fixed;inset:0;z-index:900;
+  background:rgba(4,3,10,0.88);
+  backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.fb-overlay.show{display:flex;}
+.fb-modal{
+  background:var(--bg2);
+  border:1px solid rgba(124,58,237,0.35);
+  border-radius:18px;padding:36px;
+  max-width:440px;width:100%;
   position:relative;overflow:hidden;
+  box-shadow:0 0 80px rgba(124,58,237,0.2),0 30px 60px rgba(0,0,0,0.5);
+  animation:fbIn 0.3s cubic-bezier(.34,1.56,.64,1);
 }
-.beta-banner::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--purple),transparent);
+@keyframes fbIn{from{transform:scale(0.88) translateY(20px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
+.fb-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink),var(--gold));}
+.fb-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--silver2);font-size:12px;transition:all 0.15s;}
+.fb-close:hover{background:rgba(255,255,255,0.1);color:var(--white);}
+.fb-tool-badge{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(34,211,238,0.25);padding:3px 10px;border-radius:3px;background:rgba(34,211,238,0.05);margin-bottom:12px;}
+.fb-title{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;color:var(--white);margin-bottom:4px;letter-spacing:0.3px;}
+.fb-subtitle{font-size:13px;color:var(--silver2);margin-bottom:22px;line-height:1.5;}
+.fb-stars{display:flex;gap:8px;margin-bottom:8px;}
+.fb-star{
+  font-size:28px;cursor:pointer;
+  transition:transform 0.15s,filter 0.15s;
+  filter:grayscale(1) brightness(0.4);
 }
-.beta-tag{
-  background:linear-gradient(135deg,var(--purple),var(--cyan));
-  color:white;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:700;
-  padding:5px 12px;border-radius:4px;
-  letter-spacing:2px;text-transform:uppercase;
-  white-space:nowrap;
-}
+.fb-star.lit{filter:none;transform:scale(1.1);}
+.fb-star:hover{transform:scale(1.2);filter:none;}
+.fb-star-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:1px;height:16px;margin-bottom:18px;}
+.fb-field{margin-bottom:14px;}
+.fb-field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--purple3);margin-bottom:7px;}
+.fb-field textarea{width:100%;padding:10px 13px;background:rgba(124,58,237,0.06);border:1px solid var(--border);border-radius:8px;color:var(--silver);font-size:13px;font-family:'Rajdhani',sans-serif;font-weight:500;outline:none;resize:none;min-height:68px;cursor:text;transition:all 0.2s;}
+.fb-field textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,0.15);}
+.fb-submit{width:100%;padding:14px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;box-shadow:0 0 24px rgba(124,58,237,0.4);transition:all 0.2s;margin-top:4px;}
+.fb-submit:hover{box-shadow:0 0 40px rgba(124,58,237,0.6);transform:translateY(-1px);}
+.fb-skip{display:block;text-align:center;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(148,163,184,0.2);letter-spacing:1px;cursor:pointer;border:none;background:none;width:100%;transition:color 0.2s;}
+.fb-skip:hover{color:rgba(148,163,184,0.45);}
+
+/* PRICING */
+.pricing-section{padding:100px 48px;background:var(--bg);position:relative;}
+.pricing-inner{max-width:1100px;margin:0 auto;}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.plan{border:1px solid var(--border);border-radius:16px;padding:32px;transition:all 0.2s;cursor:none;position:relative;overflow:hidden;background:rgba(124,58,237,0.03);}
+.plan::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);transition:all 0.3s;}
+.plan:hover{border-color:rgba(124,58,237,0.4);background:rgba(124,58,237,0.07);transform:translateY(-4px);box-shadow:0 20px 40px rgba(124,58,237,0.15);}
+.plan:hover::before{background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+.plan.featured{border-color:var(--purple);background:rgba(124,58,237,0.08);box-shadow:0 0 40px rgba(124,58,237,0.2);}
+.plan.featured::before{background:linear-gradient(90deg,transparent,var(--purple3),var(--cyan),var(--purple3),transparent);}
+.plan-tag{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--purple),var(--cyan));color:white;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:0 0 8px 8px;}
+.plan-name{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--silver2);margin-bottom:20px;margin-top:8px;}
+.plan-price{font-family:'Orbitron',sans-serif;font-size:44px;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1;}
+.plan-price sup{font-size:18px;vertical-align:top;margin-top:10px;font-weight:600;color:var(--purple3);}
+.plan-period{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--silver2);margin-bottom:24px;letter-spacing:0.5px;}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.plan-features li{font-size:13px;font-weight:500;color:var(--silver2);display:flex;align-items:center;gap:8px;}
+.plan-features li::before{content:'▸';color:var(--purple3);font-size:10px;flex-shrink:0;}
+.plan-btn{width:100%;padding:13px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:none;border:1px solid var(--border);background:rgba(124,58,237,0.08);color:var(--silver2);transition:all 0.2s;}
+.plan-btn:hover{border-color:var(--purple3);color:var(--purple3);background:rgba(124,58,237,0.15);}
+.plan-featured-btn{background:linear-gradient(135deg,var(--purple),var(--purple2)) !important;color:white !important;border-color:var(--purple) !important;box-shadow:0 0 24px rgba(124,58,237,0.4) !important;}
+.plan-featured-btn:hover{box-shadow:0 0 36px rgba(124,58,237,0.6) !important;transform:translateY(-1px);}
+.beta-banner{background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(34,211,238,0.06));border:1px solid rgba(124,58,237,0.3);border-radius:12px;padding:20px 28px;margin-bottom:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;position:relative;overflow:hidden;}
+.beta-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--purple),transparent);}
+.beta-tag{background:linear-gradient(135deg,var(--purple),var(--cyan));color:white;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:5px 12px;border-radius:4px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
 .beta-text-main{font-size:16px;font-weight:700;color:var(--white);}
 .beta-text-sub{font-size:13px;color:var(--silver2);margin-top:3px;}
-
-/* TOAST */
-.toast{
-  position:fixed;bottom:28px;right:28px;z-index:500;
-  padding:14px 22px;border-radius:10px;
-  font-family:'Rajdhani',sans-serif;
-  font-size:14px;font-weight:600;letter-spacing:0.5px;
-  transform:translateY(60px);opacity:0;transition:all 0.25s;
-  pointer-events:none;
-}
+.toast{position:fixed;bottom:28px;right:28px;z-index:9999;padding:14px 22px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.5px;transform:translateY(60px);opacity:0;transition:all 0.25s;pointer-events:none;}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.ok{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;box-shadow:0 8px 24px rgba(124,58,237,0.4);}
 .toast.err{background:linear-gradient(135deg,#dc2626,#ef4444);color:white;}
 .toast.inf{background:linear-gradient(135deg,#0891b2,var(--cyan));color:var(--bg);}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  nav{padding:14px 20px;}
-  .nav-links{display:none;}
-  .hero{padding:100px 20px 60px;}
-  .hero-visual{display:none;}
-  .tools-inner{padding:60px 20px;}
-  .tool-panel.active{grid-template-columns:1fr;}
-  .pricing-section{padding:60px 20px;}
-  .plans{grid-template-columns:1fr;gap:12px;}
-  .tool-tabs{overflow-x:auto;}
-}
-
-/* MOBILE NAV */
-.mob-nav{
-  display:none;position:fixed;
-  bottom:0;left:0;right:0;z-index:100;
-  background:rgba(8,6,18,0.95);
-  backdrop-filter:blur(20px);
-  border-top:1px solid var(--border);
-  padding:10px 20px 16px;
-}
+@media(max-width:900px){nav{padding:14px 20px;}.nav-links{display:none;}.hero{padding:100px 20px 60px;}.hero-visual{display:none;}.tools-inner{padding:60px 20px;}.tool-panel.active{grid-template-columns:1fr;}.pricing-section{padding:60px 20px;}.plans{grid-template-columns:1fr;gap:12px;}.tool-tabs{overflow-x:auto;}}
+.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(8,6,18,0.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:10px 20px 16px;}
 .mob-nav-inner{display:flex;justify-content:space-around;}
-.mob-tab{
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:9px;font-weight:500;
-  letter-spacing:1px;text-transform:uppercase;
-  color:var(--silver2);cursor:none;
-  border:none;background:none;
-  padding:4px 10px;border-radius:8px;transition:all 0.15s;
-}
+.mob-tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--silver2);cursor:none;border:none;background:none;padding:4px 10px;border-radius:8px;transition:all 0.15s;}
 .mob-tab.active{color:var(--purple3);}
 .mob-tab-icon{font-size:18px;}
-
 @media(max-width:900px){.mob-nav{display:block;}body{padding-bottom:70px;}}
 </style>
 </head>
 <body>
-
-<!-- CUSTOM CURSOR -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <div class="nav-logo-mark">📊</div>
-    SQLverse AI
+<!-- ── FEEDBACK MODAL ────────────────────── -->
+<div class="fb-overlay" id="fb-overlay">
+  <div class="fb-modal">
+    <button class="fb-close" onclick="skipFeedback()">✕</button>
+    <div class="fb-tool-badge" id="fb-tool-badge">// Roadmap</div>
+    <div class="fb-title">How was it? 🎯</div>
+    <div class="fb-subtitle">30-second feedback — helps us improve for everyone</div>
+    <div class="fb-stars" id="fb-stars">
+      <span class="fb-star" onclick="setRating(1)">⭐</span>
+      <span class="fb-star" onclick="setRating(2)">⭐</span>
+      <span class="fb-star" onclick="setRating(3)">⭐</span>
+      <span class="fb-star" onclick="setRating(4)">⭐</span>
+      <span class="fb-star" onclick="setRating(5)">⭐</span>
+    </div>
+    <div class="fb-star-label" id="fb-star-label"></div>
+    <div class="fb-field">
+      <label>// What did you like?</label>
+      <textarea id="fb-like" placeholder="Response was detailed, India-specific, roadmap was practical..."></textarea>
+    </div>
+    <div class="fb-field">
+      <label>// What can be improved?</label>
+      <textarea id="fb-improve" placeholder="More specific tools, faster response, better formatting..."></textarea>
+    </div>
+    <button class="fb-submit" onclick="submitFeedback()">Submit Feedback ⚡</button>
+    <button class="fb-skip" onclick="skipFeedback()">skip for now — I'll give feedback later</button>
   </div>
+</div>
+
+<nav>
+  <div class="nav-logo"><div class="nav-logo-mark">📊</div>SQLverse AI</div>
   <div class="nav-links">
     <button class="nav-link active" onclick="goTo('hero')">Home</button>
     <button class="nav-link" onclick="goTo('tools')">Tools <span class="nav-badge">AI</span></button>
     <button class="nav-link" onclick="goTo('pricing')">Pricing</button>
   </div>
-  <button class="btn btn-primary" style="padding:10px 22px;font-size:12px;" onclick="goTo('tools')">
-    Try Free Now ⚡
-  </button>
+  <button class="btn btn-primary" style="padding:10px 22px;font-size:12px;" onclick="goTo('tools')">Try Free Now ⚡</button>
 </nav>
 
-<!-- HERO -->
 <section id="hero" style="padding-top:0;">
   <div class="hero">
     <div class="hero-orb1"></div>
     <div class="hero-orb2"></div>
     <div class="hero-content">
       <div class="hero-tag">🎉 Free Beta — Limited Spots</div>
-      <h1>
-        Get Hired<br>
-        <span class="line2">as a Data Analyst.</span>
-      </h1>
+      <h1>Get Hired<br><span class="line2">as a Data Analyst.</span></h1>
       <p class="hero-sub">Roadmap. Resume. Interview prep. Three AI-powered tools built specifically for data analysts in India.</p>
       <div class="hero-actions">
         <button class="btn btn-primary" onclick="goTo('tools')">Launch Tools ⚡</button>
         <button class="btn btn-outline" onclick="goTo('pricing')">🎉 Free Beta Details</button>
       </div>
       <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-num">4.8<span>★</span></div>
-          <div class="stat-label">Rating</div>
-        </div>
-        <div class="stat" style="border-left:1px solid var(--border);padding-left:32px;">
-          <div class="stat-num" style="color:var(--purple3);">Free</div>
-          <div class="stat-label">Beta Access</div>
-        </div>
-        <div class="stat" style="border-left:1px solid var(--border);padding-left:32px;">
-          <div class="stat-num">90<span>d</span></div>
-          <div class="stat-label">To Job-Ready</div>
-        </div>
+        <div class="stat"><div class="stat-num">4.8<span>★</span></div><div class="stat-label">Rating</div></div>
+        <div class="stat" style="border-left:1px solid var(--border);padding-left:32px;"><div class="stat-num" style="color:var(--purple3);">Free</div><div class="stat-label">Beta Access</div></div>
+        <div class="stat" style="border-left:1px solid var(--border);padding-left:32px;"><div class="stat-num">90<span>d</span></div><div class="stat-label">To Job-Ready</div></div>
       </div>
     </div>
-
     <div class="hero-visual">
-      <div class="holo-card">
-        <div class="holo-val cyan">4.8★</div>
-        <div class="holo-desc">Avg Rating</div>
-      </div>
-      <div class="holo-card">
-        <div class="holo-val purple">Free</div>
-        <div class="holo-desc">Beta Now 🎉</div>
-      </div>
-      <div class="holo-card">
-        <div class="holo-val">90d</div>
-        <div class="holo-desc">Job Ready</div>
-      </div>
+      <div class="holo-card"><div class="holo-val cyan">4.8★</div><div class="holo-desc">Avg Rating</div></div>
+      <div class="holo-card"><div class="holo-val purple">Free</div><div class="holo-desc">Beta Now 🎉</div></div>
+      <div class="holo-card"><div class="holo-val">90d</div><div class="holo-desc">Job Ready</div></div>
     </div>
   </div>
 </section>
 
-<!-- TOOLS -->
 <section id="tools">
   <div class="tools-section">
     <div class="tools-inner">
       <div class="section-eyebrow">// Three AI Tools</div>
       <div class="section-title">Everything You Need.<br>Nothing You Don't.</div>
-
       <div class="tool-tabs">
         <button class="tool-tab active" onclick="switchTool('roadmap')">🗺️ Roadmap</button>
         <button class="tool-tab" onclick="switchTool('resume')">📄 Resume</button>
@@ -929,8 +474,7 @@ nav::after{
       <!-- ROADMAP -->
       <div id="tool-roadmap" class="tool-panel active">
         <div class="form-card">
-          <div class="field">
-            <label>// Current Level</label>
+          <div class="field"><label>// Current Level</label>
             <select id="rm-level">
               <option value="complete-beginner">Complete Beginner</option>
               <option value="excel-user">Excel User (some analytics)</option>
@@ -939,8 +483,7 @@ nav::after{
               <option value="career-switcher">Career Switcher</option>
             </select>
           </div>
-          <div class="field">
-            <label>// Target Role</label>
+          <div class="field"><label>// Target Role</label>
             <select id="rm-role">
               <option value="data-analyst">Data Analyst</option>
               <option value="business-analyst">Business Analyst</option>
@@ -949,16 +492,14 @@ nav::after{
               <option value="analytics-engineer">Analytics Engineer</option>
             </select>
           </div>
-          <div class="field">
-            <label>// Timeline</label>
+          <div class="field"><label>// Timeline</label>
             <select id="rm-timeline">
               <option value="3-months">3 Months — Intensive</option>
               <option value="6-months">6 Months — Balanced</option>
               <option value="12-months">12 Months — Part-time</option>
             </select>
           </div>
-          <div class="field">
-            <label>// Skills You Already Have</label>
+          <div class="field"><label>// Skills You Already Have</label>
             <div class="chips" id="rm-chips">
               <span class="chip" onclick="tog(this)">Excel</span>
               <span class="chip" onclick="tog(this)">SQL</span>
@@ -970,21 +511,22 @@ nav::after{
               <span class="chip" onclick="tog(this)">AWS</span>
             </div>
           </div>
-          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="genRoadmap()">
-            Generate My Roadmap ⚡
-          </button>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="genRoadmap()">Generate My Roadmap ⚡</button>
         </div>
-        <div class="output-card">
+        <div class="output-card" id="rm-output-card">
           <div class="output-status"><div class="output-dot"></div>AI Output Stream</div>
           <div class="loader" id="rm-loader"><div class="loader-bar"></div></div>
           <div class="output-empty" id="rm-empty">
             <div class="output-empty-icon">🗺️</div>
-            <div class="output-empty-text">// Fill in your details and hit Generate.<br>// Your week-by-week plan will appear here.</div>
+            <div class="output-empty-text">// Fill in your details and hit Generate.<br>// Your visual roadmap will appear here.</div>
           </div>
+          <!-- Visual cards go here -->
+          <div id="rm-cards" style="display:none;flex:1;overflow-y:auto;max-height:520px;padding-right:2px;"></div>
+          <!-- Fallback plain text -->
           <div class="output-text" id="rm-out"></div>
           <div class="output-footer" style="display:none;" id="rm-footer">
             <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(124,58,237,0.5);letter-spacing:1px;">// ROADMAP GENERATED</span>
-            <button class="output-copy" onclick="cp('rm-out')">COPY</button>
+            <button class="output-copy" onclick="cp('rm-out')">COPY TEXT</button>
           </div>
         </div>
       </div>
@@ -1001,13 +543,7 @@ nav::after{
             <div class="field"><label>// Your Resume</label><textarea id="res-cv" placeholder="Paste your full resume text here..."></textarea></div>
             <div class="field"><label>// Job Description</label><textarea id="res-jd" placeholder="Paste the job description you're applying to..."></textarea></div>
             <div class="field"><label>// Years of Experience</label>
-              <select id="res-exp">
-                <option value="fresher">Fresher / 0 years</option>
-                <option value="1">1 year</option>
-                <option value="2">2 years</option>
-                <option value="3-5">3–5 years</option>
-                <option value="5+">5+ years</option>
-              </select>
+              <select id="res-exp"><option value="fresher">Fresher / 0 years</option><option value="1">1 year</option><option value="2">2 years</option><option value="3-5">3–5 years</option><option value="5+">5+ years</option></select>
             </div>
             <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="optimizeResume()">Optimize Resume ⚡</button>
           </div>
@@ -1017,22 +553,15 @@ nav::after{
             <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="analyzeATS()">Analyze Keywords ⚡</button>
           </div>
           <div id="res-bullets" class="ipanel">
-            <div class="field"><label>// Weak Bullets (one per line)</label>
-              <textarea id="bul-in" placeholder="Worked on data analysis&#10;Made reports&#10;Used SQL to query database"></textarea>
-            </div>
-            <div class="field"><label>// Your Level</label>
-              <select id="bul-lvl"><option value="junior">Junior</option><option value="mid">Mid Level</option><option value="senior">Senior</option></select>
-            </div>
+            <div class="field"><label>// Weak Bullets (one per line)</label><textarea id="bul-in" placeholder="Worked on data analysis&#10;Made reports&#10;Used SQL to query database"></textarea></div>
+            <div class="field"><label>// Your Level</label><select id="bul-lvl"><option value="junior">Junior</option><option value="mid">Mid Level</option><option value="senior">Senior</option></select></div>
             <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="rewriteBullets()">Rewrite with Impact ⚡</button>
           </div>
         </div>
         <div class="output-card">
           <div class="output-status"><div class="output-dot"></div>AI Output Stream</div>
           <div class="loader" id="res-loader"><div class="loader-bar"></div></div>
-          <div class="output-empty" id="res-empty">
-            <div class="output-empty-icon">📄</div>
-            <div class="output-empty-text">// Optimized resume, ATS keywords,<br>// or power bullets will appear here.</div>
-          </div>
+          <div class="output-empty" id="res-empty"><div class="output-empty-icon">📄</div><div class="output-empty-text">// Optimized resume, ATS keywords,<br>// or power bullets will appear here.</div></div>
           <div class="output-text" id="res-out"></div>
           <div class="output-footer" style="display:none;" id="res-footer">
             <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(124,58,237,0.5);letter-spacing:1px;">// RESUME OPTIMIZED</span>
@@ -1050,7 +579,6 @@ nav::after{
             <button class="itab" onclick="switchInt('behavioral')">Behavioral</button>
             <button class="itab" onclick="switchInt('mock')">Full Mock</button>
           </div>
-
           <div id="int-sql" class="ipanel active">
             <div class="q-box">
               <div class="q-tag">SQL · <span id="sql-diff">Intermediate</span></div>
@@ -1071,7 +599,6 @@ nav::after{
             </div>
             <div class="prog-bar"><div class="prog-fill" id="s-prog" style="width:0%"></div></div>
           </div>
-
           <div id="int-case" class="ipanel">
             <div class="q-box">
               <div class="q-tag">Case Study</div>
@@ -1086,7 +613,6 @@ nav::after{
               <button class="btn btn-outline" onclick="newCase()" style="padding:10px 18px;font-size:11px;">New Case</button>
             </div>
           </div>
-
           <div id="int-behavioral" class="ipanel">
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
               <button class="btn btn-outline" onclick="loadBQ('conflict')" style="padding:7px 12px;font-size:11px;">😤 Conflict</button>
@@ -1104,38 +630,22 @@ nav::after{
             </div>
             <button class="btn btn-primary" onclick="evalBQ()" style="padding:10px 18px;font-size:11px;">Get STAR Feedback</button>
           </div>
-
           <div id="int-mock" class="ipanel">
             <div class="field"><label>// Company Type</label>
-              <select id="mock-co">
-                <option value="startup">Startup</option>
-                <option value="tech">Big Tech (FAANG-style)</option>
-                <option value="finance">Finance / Banking</option>
-                <option value="consulting">Consulting</option>
-              </select>
+              <select id="mock-co"><option value="startup">Startup</option><option value="tech">Big Tech (FAANG-style)</option><option value="finance">Finance / Banking</option><option value="consulting">Consulting</option></select>
             </div>
             <div class="field"><label>// Difficulty</label>
-              <select id="mock-diff">
-                <option value="entry">Entry Level</option>
-                <option value="mid">Mid Level</option>
-                <option value="senior">Senior</option>
-              </select>
+              <select id="mock-diff"><option value="entry">Entry Level</option><option value="mid">Mid Level</option><option value="senior">Senior</option></select>
             </div>
-            <button class="btn btn-cyan" onclick="startMock()" style="width:100%;justify-content:center;">
-              Initialize Mock Interview 🚀
-            </button>
+            <button class="btn btn-cyan" onclick="startMock()" style="width:100%;justify-content:center;">Initialize Mock Interview 🚀</button>
           </div>
         </div>
-
         <div>
           <div id="int-output-wrap">
             <div class="output-card">
               <div class="output-status"><div class="output-dot"></div>AI Feedback Stream</div>
               <div class="loader" id="int-loader"><div class="loader-bar"></div></div>
-              <div class="output-empty" id="int-empty">
-                <div class="output-empty-icon">🎯</div>
-                <div class="output-empty-text">// Submit your answer to get<br>// detailed AI feedback and scoring.</div>
-              </div>
+              <div class="output-empty" id="int-empty"><div class="output-empty-icon">🎯</div><div class="output-empty-text">// Submit your answer to get<br>// detailed AI feedback and scoring.</div></div>
               <div class="output-text" id="int-out"></div>
               <div class="output-footer" style="display:none;" id="int-footer">
                 <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(124,58,237,0.5);letter-spacing:1px;">// AI EVALUATION</span>
@@ -1143,15 +653,11 @@ nav::after{
               </div>
             </div>
           </div>
-
           <div id="mock-chat-wrap" style="display:none;">
             <div class="chat-box">
               <div class="chat-header">
                 <div class="chat-avatar">🤖</div>
-                <div>
-                  <div class="chat-name">SQLverse Interviewer</div>
-                  <div class="chat-status" id="chat-status">// Initializing...</div>
-                </div>
+                <div><div class="chat-name">SQLverse Interviewer</div><div class="chat-status" id="chat-status">// Initializing...</div></div>
               </div>
               <div class="chat-messages" id="chat-msgs"></div>
               <div class="loader" id="mock-loader" style="margin:0;border-radius:0;"><div class="loader-bar"></div></div>
@@ -1167,92 +673,55 @@ nav::after{
   </div>
 </section>
 
-<!-- PRICING -->
 <section id="pricing">
   <div class="pricing-section">
     <div class="pricing-inner">
       <div class="section-eyebrow">// Simple Pricing</div>
       <div class="section-title">Invest in Your Career.<br><span style="color:var(--purple3);">Get Hired.</span></div>
-
       <div class="beta-banner">
         <div style="display:flex;align-items:center;gap:14px;">
           <div class="beta-tag">🎉 Free Beta</div>
-          <div>
-            <div class="beta-text-main">All tools are 100% FREE right now!</div>
-            <div class="beta-text-sub">You are an early beta user — no payment needed. Paid plans launch soon.</div>
-          </div>
+          <div><div class="beta-text-main">All tools are 100% FREE right now!</div><div class="beta-text-sub">You are an early beta user — no payment needed. Paid plans launch soon.</div></div>
         </div>
-        <div style="text-align:right;">
-          <div style="color:var(--purple3);font-weight:700;font-size:13px;">🔥 Limited beta spots</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--silver2);letter-spacing:1px;">Lock in before paid launch</div>
-        </div>
+        <div style="text-align:right;"><div style="color:var(--purple3);font-weight:700;font-size:13px;">🔥 Limited beta spots</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--silver2);letter-spacing:1px;">Lock in before paid launch</div></div>
       </div>
-
       <div class="plans">
         <div class="plan" style="opacity:0.5;cursor:default;">
           <div class="plan-tag" style="background:rgba(148,163,184,0.2);color:var(--silver2);">Coming Soon</div>
           <div class="plan-name">Monthly</div>
           <div class="plan-price"><sup>₹</sup>299</div>
           <div class="plan-period">per month · after beta ends</div>
-          <ul class="plan-features">
-            <li>AI Roadmap Generator</li>
-            <li>Resume Optimizer</li>
-            <li>Mock Interview Coach</li>
-            <li>ATS Keyword Analyzer</li>
-            <li>Bullet Point Rewriter</li>
-          </ul>
+          <ul class="plan-features"><li>AI Roadmap Generator</li><li>Resume Optimizer</li><li>Mock Interview Coach</li><li>ATS Keyword Analyzer</li><li>Bullet Point Rewriter</li></ul>
           <button class="plan-btn" style="cursor:default;opacity:0.5;">Available After Beta</button>
         </div>
-
         <div class="plan featured">
           <div class="plan-tag">🎉 Free Right Now</div>
           <div class="plan-name">Beta Access</div>
           <div class="plan-price" style="color:var(--purple3);">Free</div>
           <div class="plan-period">while beta lasts · no card needed</div>
-          <ul class="plan-features">
-            <li>All 3 AI Tools Unlocked</li>
-            <li>Unlimited Roadmaps</li>
-            <li>Resume Optimizer</li>
-            <li>Mock Interview Coach</li>
-            <li>Founding Member Status 🏅</li>
-          </ul>
+          <ul class="plan-features"><li>All 3 AI Tools Unlocked</li><li>Unlimited Roadmaps</li><li>Resume Optimizer</li><li>Mock Interview Coach</li><li>Founding Member Status 🏅</li></ul>
           <button class="plan-btn plan-featured-btn" onclick="goTo('tools')">Launch Tools Now ⚡</button>
         </div>
-
         <div class="plan" style="opacity:0.5;cursor:default;">
           <div class="plan-tag" style="background:rgba(148,163,184,0.2);color:var(--silver2);">Coming Soon</div>
           <div class="plan-name">Lifetime</div>
-          <div class="plan-price"><sup>₹</sup>1999</div>
-          <div class="plan-period">one-time · after beta ends</div>
-          <ul class="plan-features">
-            <li>Everything in Monthly</li>
-            <li>Lifetime access forever</li>
-            <li>All future updates</li>
-            <li>Founding member badge</li>
-            <li>Direct founder support</li>
-          </ul>
+          <div class="plan-price"><sup>₹</sup>2499</div>
+          <div class="plan-period">one-time · founding member price</div>
+          <ul class="plan-features"><li>Everything in Monthly</li><li>Lifetime access forever</li><li>All future updates</li><li>Founding member badge</li><li>Direct founder support</li></ul>
           <button class="plan-btn" style="cursor:default;opacity:0.5;">Available After Beta</button>
         </div>
       </div>
-
       <div style="text-align:center;margin-top:40px;">
-        <div style="font-size:14px;color:var(--silver2);margin-bottom:16px;font-weight:500;">
-          🚀 Using it for free? <strong style="color:var(--white);">Share with 1 friend</strong> — that's all we ask!
-        </div>
+        <div style="font-size:14px;color:var(--silver2);margin-bottom:16px;font-weight:500;">🚀 Using it for free? <strong style="color:var(--white);">Share with 1 friend</strong> — that's all we ask!</div>
         <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-          <button onclick="shareWhatsApp()" style="padding:11px 22px;border-radius:8px;border:1px solid rgba(37,211,102,0.3);background:rgba(37,211,102,0.08);color:#25d366;font-size:13px;font-weight:700;cursor:none;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">
-            📱 Share on WhatsApp
-          </button>
-          <button onclick="shareLinkedIn()" style="padding:11px 22px;border-radius:8px;border:1px solid rgba(10,102,194,0.3);background:rgba(10,102,194,0.08);color:#60a5fa;font-size:13px;font-weight:700;cursor:none;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">
-            💼 Share on LinkedIn
-          </button>
+          <button onclick="shareWhatsApp()" style="padding:11px 22px;border-radius:8px;border:1px solid rgba(37,211,102,0.3);background:rgba(37,211,102,0.08);color:#25d366;font-size:13px;font-weight:700;cursor:none;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">📱 Share on WhatsApp</button>
+          <button onclick="shareLinkedIn()" style="padding:11px 22px;border-radius:8px;border:1px solid rgba(10,102,194,0.3);background:rgba(10,102,194,0.08);color:#60a5fa;font-size:13px;font-weight:700;cursor:none;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">💼 Share on LinkedIn</button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MOBILE NAV -->
 <div class="mob-nav">
   <div class="mob-nav-inner">
     <button class="mob-tab active" onclick="goTo('hero');mobTab(this)"><span class="mob-tab-icon">🏠</span>Home</button>
@@ -1262,358 +731,318 @@ nav::after{
 </div>
 
 <script>
-// ── CURSOR ────────────────────────────────
-const cur = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX - 4 + 'px';
-  cur.style.top = e.clientY - 4 + 'px';
-  ring.style.left = e.clientX - 16 + 'px';
-  ring.style.top = e.clientY - 16 + 'px';
-});
+// ── CURSOR
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX-4+'px';cur.style.top=e.clientY-4+'px';ring.style.left=e.clientX-16+'px';ring.style.top=e.clientY-16+'px';});
 
-// ── CONFIG ───────────────────────────────
-const API = 'https://datapath-ai-backend.ayushkht07.workers.dev';
+const API='https://datapath-ai-backend.ayushkht07.workers.dev';
 
-// ── NAV ──────────────────────────────────
-function goTo(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  document.querySelectorAll('.nav-link').forEach((l,i) => {
-    l.classList.toggle('active', ['hero','tools','pricing'][i] === id);
-  });
+// ── NAV
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});document.querySelectorAll('.nav-link').forEach((l,i)=>l.classList.toggle('active',['hero','tools','pricing'][i]===id));}
+function mobTab(el){document.querySelectorAll('.mob-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+
+// ── TOOL SWITCHER
+function switchTool(t){
+  ['roadmap','resume','interview'].forEach(n=>{document.getElementById('tool-'+n).style.display='none';document.getElementById('tool-'+n).classList.remove('active');});
+  const el=document.getElementById('tool-'+t);el.style.display='grid';el.classList.add('active');
+  document.querySelectorAll('.tool-tab').forEach((tab,i)=>tab.classList.toggle('active',['roadmap','resume','interview'][i]===t));
+  if(t!=='interview')resetMockUI();
 }
-function mobTab(el) {
-  document.querySelectorAll('.mob-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
+function switchResume(t){
+  ['optimizer','keywords','bullets'].forEach(n=>document.getElementById('res-'+n).classList.toggle('active',n===t));
+  document.querySelectorAll('#tool-resume .itab').forEach((el,i)=>el.classList.toggle('active',['optimizer','keywords','bullets'][i]===t));
 }
-
-// ── TOOL SWITCHER ─────────────────────────
-function switchTool(t) {
-  ['roadmap','resume','interview'].forEach(n => {
-    document.getElementById('tool-'+n).style.display = 'none';
-    document.getElementById('tool-'+n).classList.remove('active');
-  });
-  const el = document.getElementById('tool-'+t);
-  el.style.display = 'grid';
-  el.classList.add('active');
-  document.querySelectorAll('.tool-tab').forEach((tab, i) => {
-    tab.classList.toggle('active', ['roadmap','resume','interview'][i] === t);
-  });
-  if (t !== 'interview') resetMockUI();
+function switchInt(t){
+  ['sql','case','behavioral','mock'].forEach(n=>document.getElementById('int-'+n).classList.toggle('active',n===t));
+  document.querySelectorAll('#tool-interview .itab').forEach((el,i)=>el.classList.toggle('active',['sql','case','behavioral','mock'][i]===t));
+  document.getElementById('mock-chat-wrap').style.display=t==='mock'&&mockStarted?'block':'none';
+  document.getElementById('int-output-wrap').style.display=t==='mock'?'none':'block';
 }
+function tog(el){el.classList.toggle('on');}
+function getChips(id){return[...document.querySelectorAll(`#${id} .chip.on`)].map(e=>e.textContent).join(', ')||'None';}
+function showLoad(id){document.getElementById(id+'-loader').classList.add('on');}
+function hideLoad(id){document.getElementById(id+'-loader').classList.remove('on');}
 
-function switchResume(t) {
-  ['optimizer','keywords','bullets'].forEach(n => {
-    document.getElementById('res-'+n).classList.toggle('active', n===t);
-  });
-  document.querySelectorAll('#tool-resume .itab').forEach((el,i) => {
-    el.classList.toggle('active', ['optimizer','keywords','bullets'][i]===t);
-  });
-}
-
-function switchInt(t) {
-  ['sql','case','behavioral','mock'].forEach(n => {
-    document.getElementById('int-'+n).classList.toggle('active', n===t);
-  });
-  document.querySelectorAll('#tool-interview .itab').forEach((el,i) => {
-    el.classList.toggle('active', ['sql','case','behavioral','mock'][i]===t);
-  });
-  const isMock = t === 'mock';
-  document.getElementById('mock-chat-wrap').style.display = isMock && mockStarted ? 'block' : 'none';
-  document.getElementById('int-output-wrap').style.display = isMock ? 'none' : 'block';
-}
-
-// ── HELPERS ───────────────────────────────
-function tog(el) { el.classList.toggle('on'); }
-function getChips(id) {
-  return [...document.querySelectorAll(`#${id} .chip.on`)].map(e=>e.textContent).join(', ') || 'None';
-}
-function showLoad(id) { document.getElementById(id+'-loader').classList.add('on'); }
-function hideLoad(id) { document.getElementById(id+'-loader').classList.remove('on'); }
-
-function showResult(prefix, text) {
+function showResult(prefix,text){
   hideLoad(prefix);
-  document.getElementById(prefix+'-empty').style.display = 'none';
-  const out = document.getElementById(prefix+'-out');
-  out.textContent = text; out.classList.add('show');
-  document.getElementById(prefix+'-footer').style.display = 'flex';
+  document.getElementById(prefix+'-empty').style.display='none';
+  const out=document.getElementById(prefix+'-out');
+  out.textContent=text;out.classList.add('show');
+  document.getElementById(prefix+'-footer').style.display='flex';
+  const names={rm:'Roadmap',res:'Resume Optimizer'};
+  setTimeout(()=>showFeedback(names[prefix]||prefix),1800);
 }
-
-function showIntResult(text) {
+function showIntResult(text){
   hideLoad('int');
-  document.getElementById('int-empty').style.display = 'none';
-  const out = document.getElementById('int-out');
-  out.textContent = text; out.classList.add('show');
-  document.getElementById('int-footer').style.display = 'flex';
+  document.getElementById('int-empty').style.display='none';
+  const out=document.getElementById('int-out');
+  out.textContent=text;out.classList.add('show');
+  document.getElementById('int-footer').style.display='flex';
+  setTimeout(()=>showFeedback('Interview Coach'),1800);
 }
+function cp(id){navigator.clipboard.writeText(document.getElementById(id).textContent||'').then(()=>toast('Copied!','ok'));}
+function toast(msg,type='ok'){const el=document.getElementById('toast');el.textContent=msg;el.className=`toast ${type} show`;setTimeout(()=>el.className='toast',3000);}
 
-function cp(id) {
-  navigator.clipboard.writeText(document.getElementById(id).textContent || '')
-    .then(() => toast('Copied!','ok'));
-}
-
-function toast(msg, type='ok') {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.className = `toast ${type} show`;
-  setTimeout(() => el.className = 'toast', 3000);
-}
-
-// ── AI CALL ───────────────────────────────
-async function callAI(prompt, sys) {
-  const body = { messages:[{role:'user',content:prompt}], max_tokens:1000 };
-  if (sys) body.system = sys;
-  try {
-    const r = await fetch(API, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(body)
-    });
-    const d = await r.json();
-    if (d.error) throw new Error(d.error);
+// ── AI CALL
+async function callAI(prompt,sys){
+  const body={messages:[{role:'user',content:prompt}],max_tokens:1200};
+  if(sys)body.system=sys;
+  try{
+    const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const d=await r.json();
+    if(d.error)throw new Error(d.error);
     return d.text;
-  } catch(e) {
-    throw new Error('AI error');
-  }
+  }catch(e){throw new Error('AI error');}
 }
 
-// ── ROADMAP ───────────────────────────────
-async function genRoadmap() {
-  const level = document.getElementById('rm-level').value;
-  const role = document.getElementById('rm-role').value;
-  const time = document.getElementById('rm-timeline').value;
-  const skills = getChips('rm-chips');
+// ══════════════════════════════════════════
+//  ROADMAP — visual card renderer
+// ══════════════════════════════════════════
+const PHASE_COLORS=['#22d3ee','#c084fc','#fbbf24','#f472b6','#34d399'];
+
+async function genRoadmap(){
+  const level=document.getElementById('rm-level').value;
+  const role=document.getElementById('rm-role').value;
+  const time=document.getElementById('rm-timeline').value;
+  const skills=getChips('rm-chips');
   showLoad('rm');
-  document.getElementById('rm-empty').style.display = 'none';
-  try {
-    const text = await callAI(`Create a practical week-by-week learning roadmap.\n\nLevel: ${level}\nTarget Role: ${role}\nTimeline: ${time}\nCurrent Skills: ${skills}\n\nProvide 4-5 phases. Each phase: name + duration, what to learn (specific tools/topics), 2 free resources, 1 hands-on project, skills at phase end.\n\nBe specific, practical, and India job-market focused. End with 3 career tips.`);
-    showResult('rm', text);
-  } catch(e) { hideLoad('rm'); toast('AI error — try again','err'); }
+  document.getElementById('rm-empty').style.display='none';
+  document.getElementById('rm-cards').style.display='none';
+  document.getElementById('rm-out').classList.remove('show');
+  document.getElementById('rm-footer').style.display='none';
+  try{
+    const text=await callAI(`Create a data analyst learning roadmap. Respond ONLY in valid JSON — no markdown, no extra text.
+Level: ${level} | Role: ${role} | Timeline: ${time} | Current Skills: ${skills}
+JSON structure (return exactly this):
+{"phases":[{"number":1,"name":"Phase Title","duration":"Weeks 1-3","emoji":"🔥","skills":["Skill A","Skill B","Skill C"],"resources":["Free Resource 1","Free Resource 2"],"project":"Build XYZ project description","outcome":"You will be able to do XYZ"}],"tips":["Tip 1","Tip 2","Tip 3"]}
+Rules: 4-5 phases, India job-market focused, real tool names (SQL, Power BI, Python, etc).`);
+    try{
+      const clean=text.replace(/```json|```/g,'').trim();
+      const data=JSON.parse(clean);
+      renderRoadmapCards(data);
+    }catch(e){
+      // JSON parse failed — show plain text
+      showResult('rm',text);
+    }
+  }catch(e){hideLoad('rm');toast('AI error — try again','err');}
 }
 
-// ── RESUME ────────────────────────────────
-async function optimizeResume() {
-  const cv = document.getElementById('res-cv').value;
-  const jd = document.getElementById('res-jd').value;
-  const exp = document.getElementById('res-exp').value;
-  if (!cv.trim() && !jd.trim()) { toast('Paste your resume or JD first','err'); return; }
-  showLoad('res');
-  document.getElementById('res-empty').style.display = 'none';
-  try {
-    const text = await callAI(`Optimize this resume for ATS and the job description.\n\nExperience: ${exp} years\nResume: ${cv||'Not provided'}\nJob Description: ${jd||'Generic Data Analyst role'}\n\nTasks:\n1. Rewrite bullets with strong verbs and impact metrics (%, numbers, ₹)\n2. Write a 3-line professional summary\n3. List 5 skills to add\n4. Give ATS match score out of 100 with reasoning\n\nBe specific and practical.`);
-    showResult('res', text);
-  } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
+function renderRoadmapCards(data){
+  hideLoad('rm');
+  document.getElementById('rm-empty').style.display='none';
+  document.getElementById('rm-out').style.display='none';
+
+  const container=document.getElementById('rm-cards');
+  container.innerHTML='';
+  container.style.display='block';
+
+  const wrap=document.createElement('div');
+  wrap.className='rm-visual-wrap';
+
+  // Progress stepper
+  const stepper=document.createElement('div');
+  stepper.className='rm-stepper';
+  (data.phases||[]).forEach((_,i)=>{
+    const s=document.createElement('div');
+    s.className='rm-step';
+    s.style.setProperty('--c2',PHASE_COLORS[i]||'#c084fc');
+    s.style.background=`linear-gradient(90deg,${PHASE_COLORS[i]||'#c084fc'},${PHASE_COLORS[(i+1)%PHASE_COLORS.length]})`;
+    stepper.appendChild(s);
+  });
+  wrap.appendChild(stepper);
+
+  // Phase cards
+  (data.phases||[]).forEach((phase,idx)=>{
+    const color=PHASE_COLORS[idx]||'#c084fc';
+    const card=document.createElement('div');
+    card.className='rm-phase-card'+(idx===0?' open':'');
+    card.style.setProperty('--c',color);
+    card.style.background=`linear-gradient(135deg, rgba(${hexToRgb(color)},0.07) 0%, rgba(13,10,31,0.95) 60%)`;
+
+    // Header
+    const header=document.createElement('div');
+    header.className='rm-card-header';
+    header.innerHTML=`
+      <div class="rm-badge" style="box-shadow:0 0 12px ${color}44">${phase.emoji||'🎯'}</div>
+      <div class="rm-card-meta">
+        <div class="rm-card-title">Phase ${phase.number||idx+1} — ${phase.name}</div>
+        <div class="rm-card-sub">${(phase.skills||[]).slice(0,3).join(' · ')}</div>
+      </div>
+      <div class="rm-dur-pill" style="background:${color};color:#080612">${phase.duration}</div>
+      <span class="rm-chevron">${idx===0?'▲':'▼'}</span>`;
+    header.onclick=()=>{
+      const isOpen=card.classList.toggle('open');
+      card.querySelector('.rm-card-body').classList.toggle('open',isOpen);
+      card.querySelector('.rm-chevron').textContent=isOpen?'▲':'▼';
+    };
+
+    // Body
+    const body=document.createElement('div');
+    body.className='rm-card-body'+(idx===0?' open':'');
+    body.innerHTML=`
+      <div class="rm-sec">
+        <div class="rm-sec-label">Skills to Learn</div>
+        <div class="rm-tags">${(phase.skills||[]).map(s=>`<span class="rm-tag">${s}</span>`).join('')}</div>
+      </div>
+      <div class="rm-sec">
+        <div class="rm-sec-label">Free Resources</div>
+        <div class="rm-resources">${(phase.resources||[]).map(r=>`<div class="rm-res-item"><div class="rm-res-dot"></div>${r}</div>`).join('')}</div>
+      </div>
+      <div class="rm-sec">
+        <div class="rm-sec-label">Hands-on Project</div>
+        <div class="rm-project-box">🛠️ ${phase.project||''}</div>
+      </div>
+      <div class="rm-sec">
+        <div class="rm-sec-label">After This Phase</div>
+        <div class="rm-outcome">✅ ${phase.outcome||''}</div>
+      </div>`;
+
+    card.appendChild(header);
+    card.appendChild(body);
+    wrap.appendChild(card);
+  });
+
+  // Tips card
+  if((data.tips||[]).length){
+    const tips=document.createElement('div');
+    tips.className='rm-tips-card';
+    tips.innerHTML=`<div class="rm-tips-title">💡 Career Tips for India Market</div>${data.tips.map(t=>`<div class="rm-tip-row"><span class="rm-tip-icon">▸</span>${t}</div>`).join('')}`;
+    wrap.appendChild(tips);
+  }
+
+  container.appendChild(wrap);
+  document.getElementById('rm-footer').style.display='flex';
+  setTimeout(()=>showFeedback('Roadmap Generator'),1800);
 }
 
-async function analyzeATS() {
-  const jd = document.getElementById('ats-jd').value;
-  if (!jd.trim()) { toast('Paste a job description first','err'); return; }
-  showLoad('res');
-  document.getElementById('res-empty').style.display = 'none';
-  try {
-    const text = await callAI(`Analyze this JD for ATS keywords.\n\nJD: ${jd}\nResume: ${document.getElementById('ats-cv').value||'Not provided'}\n\nProvide: 10 must-have keywords, 5 secondary keywords, which are missing from resume, ATS match score, 3 specific improvement tips.`);
-    showResult('res', text);
-  } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
+// hex → "r,g,b" helper
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return`${r},${g},${b}`;
 }
 
-async function rewriteBullets() {
-  const bullets = document.getElementById('bul-in').value;
-  const level = document.getElementById('bul-lvl').value;
-  if (!bullets.trim()) { toast('Paste your bullet points first','err'); return; }
-  showLoad('res');
-  document.getElementById('res-empty').style.display = 'none';
-  try {
-    const text = await callAI(`Rewrite these ${level}-level resume bullets for a data analyst role. Use strong action verbs, add impact metrics (even estimated), include technical keywords.\n\nOriginal bullets:\n${bullets}\n\nShow: Original → Rewritten for each. Then list all power bullets ready to copy.`);
-    showResult('res', text);
-  } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
+// ══════════════════════════════════════════
+//  FEEDBACK SYSTEM
+// ══════════════════════════════════════════
+let fbRating=0,fbTool='';
+const starLabels=['','Needs work 😕','Could be better 🤔','It\'s okay 👍','Pretty good! 😊','Amazing! 🔥'];
+
+function showFeedback(tool){
+  fbTool=tool;fbRating=0;
+  document.getElementById('fb-tool-badge').textContent='// '+tool;
+  document.getElementById('fb-like').value='';
+  document.getElementById('fb-improve').value='';
+  document.getElementById('fb-star-label').textContent='';
+  document.querySelectorAll('.fb-star').forEach(s=>s.classList.remove('lit'));
+  document.getElementById('fb-overlay').classList.add('show');
+}
+function setRating(n){
+  fbRating=n;
+  document.querySelectorAll('.fb-star').forEach((s,i)=>s.classList.toggle('lit',i<n));
+  document.getElementById('fb-star-label').textContent=starLabels[n]||'';
+}
+function submitFeedback(){
+  if(!fbRating){toast('Please pick a star rating first ⭐','err');return;}
+  const fb={tool:fbTool,rating:fbRating,liked:document.getElementById('fb-like').value,improve:document.getElementById('fb-improve').value,time:new Date().toLocaleString('en-IN')};
+  // Store in localStorage for Ayush to review
+  const all=JSON.parse(localStorage.getItem('sqlverse_feedback')||'[]');
+  all.push(fb);
+  localStorage.setItem('sqlverse_feedback',JSON.stringify(all));
+  console.log('📊 SQLverse Feedback saved:',JSON.stringify(fb,null,2));
+  document.getElementById('fb-overlay').classList.remove('show');
+  if(fbRating>=4)toast('Thanks! Means a lot 🙏','ok');
+  else toast('Thanks for the honest feedback — will improve! 💪','inf');
+}
+function skipFeedback(){document.getElementById('fb-overlay').classList.remove('show');}
+
+// ── RESUME
+async function optimizeResume(){
+  const cv=document.getElementById('res-cv').value,jd=document.getElementById('res-jd').value,exp=document.getElementById('res-exp').value;
+  if(!cv.trim()&&!jd.trim()){toast('Paste your resume or JD first','err');return;}
+  showLoad('res');document.getElementById('res-empty').style.display='none';
+  try{const text=await callAI(`Optimize this resume for ATS and the job description.\n\nExperience: ${exp} years\nResume: ${cv||'Not provided'}\nJob Description: ${jd||'Generic Data Analyst role'}\n\nTasks:\n1. Rewrite bullets with strong verbs and impact metrics (%, numbers, ₹)\n2. Write a 3-line professional summary\n3. List 5 skills to add\n4. Give ATS match score out of 100 with reasoning\n\nBe specific and practical.`);showResult('res',text);}
+  catch(e){hideLoad('res');toast('AI error — try again','err');}
+}
+async function analyzeATS(){
+  const jd=document.getElementById('ats-jd').value;
+  if(!jd.trim()){toast('Paste a job description first','err');return;}
+  showLoad('res');document.getElementById('res-empty').style.display='none';
+  try{const text=await callAI(`Analyze this JD for ATS keywords.\n\nJD: ${jd}\nResume: ${document.getElementById('ats-cv').value||'Not provided'}\n\nProvide: 10 must-have keywords, 5 secondary keywords, which are missing from resume, ATS match score, 3 specific improvement tips.`);showResult('res',text);}
+  catch(e){hideLoad('res');toast('AI error — try again','err');}
+}
+async function rewriteBullets(){
+  const bullets=document.getElementById('bul-in').value,level=document.getElementById('bul-lvl').value;
+  if(!bullets.trim()){toast('Paste your bullet points first','err');return;}
+  showLoad('res');document.getElementById('res-empty').style.display='none';
+  try{const text=await callAI(`Rewrite these ${level}-level resume bullets for a data analyst role. Use strong action verbs, add impact metrics (even estimated), include technical keywords.\n\nOriginal bullets:\n${bullets}\n\nShow: Original → Rewritten for each. Then list all power bullets ready to copy.`);showResult('res',text);}
+  catch(e){hideLoad('res');toast('AI error — try again','err');}
 }
 
-// ── INTERVIEW ─────────────────────────────
-let sqlIdx=0, sqlAtt=0, sqlCor=0;
-const sqlQs = [
-  { q:`You have a table <span class="q-code">orders(order_id, customer_id, amount, created_at)</span>.<br><br>Write a query to find customers with more than 3 orders AND total spend over $500, ordered by total spend descending.`, d:'Intermediate' },
-  { q:`From a <span class="q-code">user_events(user_id, event_type, event_date)</span> table, find users who did 'sign_up' but NEVER did 'purchase' within 30 days of signing up.`, d:'Advanced' },
-  { q:`Calculate month-over-month growth % of new users for the last 6 months. Table: <span class="q-code">users(user_id, signup_date)</span>. Include previous month count, current count, and growth %.`, d:'Advanced' }
+// ── INTERVIEW
+let sqlIdx=0,sqlAtt=0,sqlCor=0;
+const sqlQs=[
+  {q:`You have a table <span class="q-code">orders(order_id, customer_id, amount, created_at)</span>.<br><br>Write a query to find customers with more than 3 orders AND total spend over $500, ordered by total spend descending.`,d:'Intermediate'},
+  {q:`From a <span class="q-code">user_events(user_id, event_type, event_date)</span> table, find users who did 'sign_up' but NEVER did 'purchase' within 30 days of signing up.`,d:'Advanced'},
+  {q:`Calculate month-over-month growth % of new users for the last 6 months. Table: <span class="q-code">users(user_id, signup_date)</span>. Include previous month count, current count, and growth %.`,d:'Advanced'}
 ];
-
-async function checkSQL() {
-  const ans = document.getElementById('sql-ans').value;
-  if (!ans.trim()) { toast('Write a query first','err'); return; }
-  sqlAtt++;
-  showLoad('int');
-  document.getElementById('int-empty').style.display = 'none';
-  try {
-    const text = await callAI(`Evaluate this SQL answer.\n\nQuestion: ${sqlQs[sqlIdx].q.replace(/<[^>]*>/g,'')}\nAnswer: ${ans}\n\nScore out of 10. Check: correctness, efficiency, style. Then show the ideal solution with explanation. Be encouraging but honest.`);
-    if (/[89]\/10|10\/10|correct|good/i.test(text)) sqlCor++;
-    updateSQL(); showIntResult(text);
-  } catch(e) { hideLoad('int'); toast('AI error — try again','err'); }
+async function checkSQL(){
+  const ans=document.getElementById('sql-ans').value;
+  if(!ans.trim()){toast('Write a query first','err');return;}
+  sqlAtt++;showLoad('int');document.getElementById('int-empty').style.display='none';
+  try{const text=await callAI(`Evaluate this SQL answer.\n\nQuestion: ${sqlQs[sqlIdx].q.replace(/<[^>]*>/g,'')}\nAnswer: ${ans}\n\nScore out of 10. Check: correctness, efficiency, style. Then show the ideal solution with explanation. Be encouraging but honest.`);if(/[89]\/10|10\/10|correct|good/i.test(text))sqlCor++;updateSQL();showIntResult(text);}
+  catch(e){hideLoad('int');toast('AI error — try again','err');}
 }
-
-function sqlHint() {
-  const hints = [
-    'Use GROUP BY + HAVING COUNT(*) > 3 AND SUM(amount) > 500',
-    'Think about NOT EXISTS with a subquery filtering by event_type and DATE difference <= 30',
-    'Use LAG() window function to get previous month count, then (current-prev)/prev * 100'
-  ];
-  showIntResult('💡 Hint:\n\n' + hints[sqlIdx] + '\n\nTry again with this in mind!');
+function sqlHint(){const hints=['Use GROUP BY + HAVING COUNT(*) > 3 AND SUM(amount) > 500','Think about NOT EXISTS with a subquery filtering by event_type and DATE difference <= 30','Use LAG() window function to get previous month count, then (current-prev)/prev * 100'];showIntResult('💡 Hint:\n\n'+hints[sqlIdx]+'\n\nTry again with this in mind!');}
+function nextSQL(){sqlIdx=(sqlIdx+1)%sqlQs.length;document.getElementById('sql-q').innerHTML=sqlQs[sqlIdx].q;document.getElementById('sql-diff').textContent=sqlQs[sqlIdx].d;document.getElementById('sql-ans').value='';document.getElementById('int-out').classList.remove('show');document.getElementById('int-empty').style.display='flex';document.getElementById('int-footer').style.display='none';}
+function updateSQL(){document.getElementById('s-att').textContent=sqlAtt;document.getElementById('s-cor').textContent=sqlCor;const acc=sqlAtt>0?Math.round(sqlCor/sqlAtt*100):0;document.getElementById('s-acc').textContent=sqlAtt>0?acc+'%':'—';document.getElementById('s-prog').style.width=acc+'%';document.getElementById('s-acc').className='score-num'+(acc>=70?' good':acc>0?' bad':'');}
+const caseQs=["Your company's DAU dropped 15% last Tuesday. The CEO needs an explanation by end of day. Walk through your complete analysis framework.","Revenue fell 20% in Q4 despite user numbers growing 10%. How do you investigate this paradox?","Churn rate increased 8% this month with no obvious cause. How do you find out why and what to do?"];
+let caseIdx=0;
+async function evalCase(){
+  const ans=document.getElementById('case-ans').value;
+  if(!ans.trim()){toast('Write your approach first','err');return;}
+  showLoad('int');document.getElementById('int-empty').style.display='none';
+  try{const text=await callAI(`Evaluate this case study answer. Score each dimension 1-5: Problem Framing, Hypothesis Generation, Data Approach, Communication, Business Acumen.\n\nCase: ${document.getElementById('case-q').textContent}\nAnswer: ${ans}\n\nGive total /25, 3 strengths, 3 improvements, and a model answer outline.`);showIntResult(text);}
+  catch(e){hideLoad('int');toast('AI error — try again','err');}
 }
-
-function nextSQL() {
-  sqlIdx = (sqlIdx+1) % sqlQs.length;
-  document.getElementById('sql-q').innerHTML = sqlQs[sqlIdx].q;
-  document.getElementById('sql-diff').textContent = sqlQs[sqlIdx].d;
-  document.getElementById('sql-ans').value = '';
-  document.getElementById('int-out').classList.remove('show');
-  document.getElementById('int-empty').style.display = 'flex';
-  document.getElementById('int-footer').style.display = 'none';
+function caseHint(){showIntResult(`📋 DACI Framework for Metric Drops:\n\n1. CLARIFY FIRST\n• Which platform / device / region?\n• New vs returning users?\n• Any recent product changes?\n\n2. SEGMENT THE DROP\n• By platform, geography, cohort\n• Funnel: fewer sessions or shorter?\n\n3. HYPOTHESES\n• Technical: tracking bug, broken feature\n• Product: A/B test, UI change\n• External: competitor, news, seasonal\n\n4. DATA TO CHECK\n• Error logs + crash reports\n• App store reviews\n• Login / signup funnel\n\n5. COMMUNICATE\n• Lead with most likely hypothesis\n• Give timeline for full answer`);}
+function newCase(){caseIdx=(caseIdx+1)%caseQs.length;document.getElementById('case-q').textContent=caseQs[caseIdx];document.getElementById('case-ans').value='';document.getElementById('int-out').classList.remove('show');document.getElementById('int-empty').style.display='flex';document.getElementById('int-footer').style.display='none';}
+const bqMap={conflict:"Tell me about a time you disagreed with a stakeholder on how to interpret data or present findings. How did you resolve it?",leadership:"Describe a time you took initiative on a data project without being asked. What was the outcome?",failure:"Tell me about a data analysis you got wrong. How did you discover the mistake and what did you do?",success:"Walk me through your proudest data project — the problem, your approach, and the business outcome."};
+function loadBQ(type){const keys=Object.keys(bqMap);const q=type==='random'?bqMap[keys[Math.floor(Math.random()*keys.length)]]:bqMap[type];document.getElementById('bq-q').textContent=q||'Select a category';document.getElementById('bq-ans').value='';document.getElementById('int-out').classList.remove('show');document.getElementById('int-empty').style.display='flex';}
+async function evalBQ(){
+  const q=document.getElementById('bq-q').textContent,ans=document.getElementById('bq-ans').value;
+  if(!ans.trim()||q.includes('Select')){toast('Pick a question and write your answer first','err');return;}
+  showLoad('int');document.getElementById('int-empty').style.display='none';
+  try{const text=await callAI(`Evaluate this behavioral answer using STAR. Score each (1-5): Situation, Task, Action, Result.\n\nQ: ${q}\nA: ${ans}\n\nTotal /20, strengths, weaknesses, rewrite the weakest section.`);showIntResult(text);}
+  catch(e){hideLoad('int');toast('AI error — try again','err');}
 }
-
-function updateSQL() {
-  document.getElementById('s-att').textContent = sqlAtt;
-  document.getElementById('s-cor').textContent = sqlCor;
-  const acc = sqlAtt > 0 ? Math.round(sqlCor/sqlAtt*100) : 0;
-  document.getElementById('s-acc').textContent = sqlAtt > 0 ? acc+'%' : '—';
-  document.getElementById('s-prog').style.width = acc + '%';
-  document.getElementById('s-acc').className = 'score-num' + (acc >= 70 ? ' good' : acc > 0 ? ' bad' : '');
-}
-
-const caseQs = [
-  "Your company's DAU dropped 15% last Tuesday. The CEO needs an explanation by end of day. Walk through your complete analysis framework.",
-  "Revenue fell 20% in Q4 despite user numbers growing 10%. How do you investigate this paradox?",
-  "Churn rate increased 8% this month with no obvious cause. How do you find out why and what to do?"
-];
-let caseIdx = 0;
-
-async function evalCase() {
-  const ans = document.getElementById('case-ans').value;
-  if (!ans.trim()) { toast('Write your approach first','err'); return; }
-  showLoad('int');
-  document.getElementById('int-empty').style.display = 'none';
-  try {
-    const text = await callAI(`Evaluate this case study answer. Score each dimension 1-5: Problem Framing, Hypothesis Generation, Data Approach, Communication, Business Acumen.\n\nCase: ${document.getElementById('case-q').textContent}\nAnswer: ${ans}\n\nGive total /25, 3 strengths, 3 improvements, and a model answer outline.`);
-    showIntResult(text);
-  } catch(e) { hideLoad('int'); toast('AI error — try again','err'); }
-}
-
-function caseHint() {
-  showIntResult(`📋 DACI Framework for Metric Drops:\n\n1. CLARIFY FIRST\n• Which platform / device / region?\n• New vs returning users?\n• Any recent product changes?\n\n2. SEGMENT THE DROP\n• By platform, geography, cohort\n• Funnel: fewer sessions or shorter?\n\n3. HYPOTHESES\n• Technical: tracking bug, broken feature\n• Product: A/B test, UI change\n• External: competitor, news, seasonal\n\n4. DATA TO CHECK\n• Error logs + crash reports\n• App store reviews\n• Login / signup funnel\n\n5. COMMUNICATE\n• Lead with most likely hypothesis\n• Give timeline for full answer`);
-}
-
-function newCase() {
-  caseIdx = (caseIdx+1) % caseQs.length;
-  document.getElementById('case-q').textContent = caseQs[caseIdx];
-  document.getElementById('case-ans').value = '';
-  document.getElementById('int-out').classList.remove('show');
-  document.getElementById('int-empty').style.display = 'flex';
-  document.getElementById('int-footer').style.display = 'none';
-}
-
-const bqMap = {
-  conflict: "Tell me about a time you disagreed with a stakeholder on how to interpret data or present findings. How did you resolve it?",
-  leadership: "Describe a time you took initiative on a data project without being asked. What was the outcome?",
-  failure: "Tell me about a data analysis you got wrong. How did you discover the mistake and what did you do?",
-  success: "Walk me through your proudest data project — the problem, your approach, and the business outcome."
-};
-
-function loadBQ(type) {
-  const keys = Object.keys(bqMap);
-  const q = type === 'random' ? bqMap[keys[Math.floor(Math.random()*keys.length)]] : bqMap[type];
-  document.getElementById('bq-q').textContent = q || 'Select a category';
-  document.getElementById('bq-ans').value = '';
-  document.getElementById('int-out').classList.remove('show');
-  document.getElementById('int-empty').style.display = 'flex';
-}
-
-async function evalBQ() {
-  const q = document.getElementById('bq-q').textContent;
-  const ans = document.getElementById('bq-ans').value;
-  if (!ans.trim() || q.includes('Select')) { toast('Pick a question and write your answer first','err'); return; }
-  showLoad('int');
-  document.getElementById('int-empty').style.display = 'none';
-  try {
-    const text = await callAI(`Evaluate this behavioral answer using STAR. Score each (1-5): Situation, Task, Action, Result.\n\nQ: ${q}\nA: ${ans}\n\nTotal /20, strengths, weaknesses, rewrite the weakest section.`);
-    showIntResult(text);
-  } catch(e) { hideLoad('int'); toast('AI error — try again','err'); }
-}
-
-let mockHistory = [], mockStarted = false;
-
-function resetMockUI() {
-  document.getElementById('mock-chat-wrap').style.display = 'none';
-  document.getElementById('int-output-wrap').style.display = 'block';
-}
-
-async function startMock() {
-  const co = document.getElementById('mock-co').value;
-  const diff = document.getElementById('mock-diff').value;
-  mockHistory = []; mockStarted = true;
-  document.getElementById('mock-chat-wrap').style.display = 'block';
-  document.getElementById('int-output-wrap').style.display = 'none';
-  document.getElementById('chat-msgs').innerHTML = '';
-  document.getElementById('chat-status').textContent = '// Interview in progress';
-  addChatMsg('sys', '🎙️ Interview initialized. Type your answers below.');
+let mockHistory=[],mockStarted=false;
+function resetMockUI(){document.getElementById('mock-chat-wrap').style.display='none';document.getElementById('int-output-wrap').style.display='block';}
+async function startMock(){
+  const co=document.getElementById('mock-co').value,diff=document.getElementById('mock-diff').value;
+  mockHistory=[];mockStarted=true;
+  document.getElementById('mock-chat-wrap').style.display='block';
+  document.getElementById('int-output-wrap').style.display='none';
+  document.getElementById('chat-msgs').innerHTML='';
+  document.getElementById('chat-status').textContent='// Interview in progress';
+  addChatMsg('sys','🎙️ Interview initialized. Type your answers below.');
   document.getElementById('mock-loader').classList.add('on');
-  try {
-    const text = await callAI(`Start a ${diff}-level data analyst mock interview for a ${co}. Introduce yourself briefly as the interviewer, then ask your first question. Mix SQL, analytics thinking, and behavioral questions naturally. Keep it realistic.`);
-    document.getElementById('mock-loader').classList.remove('on');
-    addChatMsg('ai', text);
-    mockHistory.push({ role:'assistant', content:text });
-  } catch(e) {
-    document.getElementById('mock-loader').classList.remove('on');
-    toast('Could not start interview','err');
-  }
+  try{const text=await callAI(`Start a ${diff}-level data analyst mock interview for a ${co}. Introduce yourself briefly as the interviewer, then ask your first question. Mix SQL, analytics thinking, and behavioral questions naturally. Keep it realistic.`);document.getElementById('mock-loader').classList.remove('on');addChatMsg('ai',text);mockHistory.push({role:'assistant',content:text});}
+  catch(e){document.getElementById('mock-loader').classList.remove('on');toast('Could not start interview','err');}
 }
-
-async function sendMock() {
-  const inp = document.getElementById('mock-inp');
-  const txt = inp.value.trim();
-  if (!txt || !mockStarted) return;
-  inp.value = '';
-  addChatMsg('user', txt);
-  mockHistory.push({ role:'user', content:txt });
+async function sendMock(){
+  const inp=document.getElementById('mock-inp'),txt=inp.value.trim();
+  if(!txt||!mockStarted)return;
+  inp.value='';addChatMsg('user',txt);mockHistory.push({role:'user',content:txt});
   document.getElementById('mock-loader').classList.add('on');
-  try {
-    const text = await callAI(
-      mockHistory.map(m=>`${m.role==='user'?'Candidate':'Interviewer'}: ${m.content}`).join('\n\n') +
-      '\n\nRespond as the interviewer: give 1-2 lines of feedback, then ask the next question. After 5+ exchanges, offer a full debrief.',
-      'You are a professional data analyst interviewer. Be realistic, probe answers, and give useful feedback.'
-    );
-    document.getElementById('mock-loader').classList.remove('on');
-    addChatMsg('ai', text);
-    mockHistory.push({ role:'assistant', content:text });
-  } catch(e) {
-    document.getElementById('mock-loader').classList.remove('on');
-    toast('AI error','err');
-  }
+  try{const text=await callAI(mockHistory.map(m=>`${m.role==='user'?'Candidate':'Interviewer'}: ${m.content}`).join('\n\n')+'\n\nRespond as the interviewer: give 1-2 lines of feedback, then ask the next question. After 5+ exchanges, offer a full debrief.','You are a professional data analyst interviewer. Be realistic, probe answers, and give useful feedback.');document.getElementById('mock-loader').classList.remove('on');addChatMsg('ai',text);mockHistory.push({role:'assistant',content:text});}
+  catch(e){document.getElementById('mock-loader').classList.remove('on');toast('AI error','err');}
 }
+function addChatMsg(role,text){const c=document.getElementById('chat-msgs'),d=document.createElement('div');d.className={sys:'msg-sys',user:'msg-user',ai:'msg-ai'}[role];d.textContent=text;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&document.activeElement===document.getElementById('mock-inp')){e.preventDefault();sendMock();}});
 
-function addChatMsg(role, text) {
-  const c = document.getElementById('chat-msgs');
-  const d = document.createElement('div');
-  d.className = { sys:'msg-sys', user:'msg-user', ai:'msg-ai' }[role];
-  d.textContent = text;
-  c.appendChild(d);
-  c.scrollTop = c.scrollHeight;
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key==='Enter' && !e.shiftKey && document.activeElement===document.getElementById('mock-inp')) {
-    e.preventDefault(); sendMock();
-  }
-});
-
-function shareWhatsApp() {
-  const msg = encodeURIComponent(`🚀 Bhai ye tool try karo — bilkul FREE hai!\n\nSQLverse AI — Data Analyst job ke liye:\n✅ AI Roadmap Generator\n✅ Resume Optimizer\n✅ Mock Interview Coach\n\nAbhi Free Beta chal raha hai 👇\nhttps://ayush123ak.github.io/SQLverse-ai/`);
-  window.open(`https://wa.me/?text=${msg}`, '_blank');
-}
-
-function shareLinkedIn() {
-  const url = encodeURIComponent('https://ayush123ak.github.io/SQLverse-ai/');
-  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-}
-
-function pay(plan) {
-  toast('🎉 Abhi FREE Beta hai — koi payment nahi chahiye!', 'ok');
-}
+function shareWhatsApp(){const msg=encodeURIComponent(`🚀 Bhai ye tool try karo — bilkul FREE hai!\n\nSQLverse AI — Data Analyst job ke liye:\n✅ AI Roadmap Generator\n✅ Resume Optimizer\n✅ Mock Interview Coach\n\nAbhi Free Beta chal raha hai 👇\nhttps://ayush123ak.github.io/sqlverse-ai/`);window.open(`https://wa.me/?text=${msg}`,'_blank');}
+function shareLinkedIn(){window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://ayush123ak.github.io/sqlverse-ai/')}`,'_blank');}
+function pay(plan){toast('🎉 Abhi FREE Beta hai — koi payment nahi chahiye!','ok');}
 </script>
 </body>
 </html>
