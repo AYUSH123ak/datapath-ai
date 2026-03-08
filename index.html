@@ -785,10 +785,11 @@ function toast(msg,type='ok'){const el=document.getElementById('toast');el.textC
 
 // ── AI CALL
 async function callAI(prompt,sys){
-  const body={messages:[{role:'user',content:prompt}],max_tokens:1200};
-  if(sys)body.system=sys;
+  const messages=[];
+  if(sys) messages.push({role:'system',content:sys});
+  messages.push({role:'user',content:prompt});
   try{
-    const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages,max_tokens:1500})});
     const d=await r.json();
     if(d.error)throw new Error(d.error);
     return d.text;
@@ -811,20 +812,109 @@ async function genRoadmap(){
   document.getElementById('rm-out').classList.remove('show');
   document.getElementById('rm-footer').style.display='none';
   try{
-    const text=await callAI(`Create a data analyst learning roadmap. Respond ONLY in valid JSON — no markdown, no extra text.
-Level: ${level} | Role: ${role} | Timeline: ${time} | Current Skills: ${skills}
-JSON structure (return exactly this):
-{"phases":[{"number":1,"name":"Phase Title","duration":"Weeks 1-3","emoji":"🔥","skills":["Skill A","Skill B","Skill C"],"resources":["Free Resource 1","Free Resource 2"],"project":"Build XYZ project description","outcome":"You will be able to do XYZ"}],"tips":["Tip 1","Tip 2","Tip 3"]}
-Rules: 4-5 phases, India job-market focused, real tool names (SQL, Power BI, Python, etc).`);
-    try{
-      const clean=text.replace(/```json|```/g,'').trim();
-      const data=JSON.parse(clean);
-      renderRoadmapCards(data);
-    }catch(e){
-      // JSON parse failed — show plain text
-      showResult('rm',text);
+    // System prompt forces JSON — put in messages array so Groq respects it
+    const sysPrompt = 'You are a JSON generator. You ONLY output valid JSON. Never output text, explanations, or markdown. Start your response with { and end with }. No backticks, no code fences, no prose.';
+    const userPrompt = `Generate a data analyst learning roadmap for India job market.
+Student: ${level} | Goal: ${role} | Time: ${time} | Has: ${skills}
+
+Output ONLY this JSON (4-5 phases, no other text):
+{"phases":[{"number":1,"name":"Foundation","duration":"Weeks 1-4","emoji":"🔥","skills":["Skill1","Skill2","Skill3"],"resources":["Free resource 1","Free resource 2"],"project":"Hands-on project description","outcome":"What student can do after this"},{"number":2,"name":"Core Skills","duration":"Weeks 5-9","emoji":"📊","skills":["SQL JOINs","Aggregations","Subqueries"],"resources":["Mode SQL Tutorial (free)","SQLZoo (free)"],"project":"Analyze e-commerce data with complex SQL","outcome":"Write advanced SQL queries for interviews"}],"tips":["Tip for India job market 1","Tip 2","Tip 3"]}`;
+
+    const raw = await callAI(userPrompt, sysPrompt);
+    
+    // Try 4 extraction strategies
+    let data = null;
+    
+    // 1. Direct parse
+    try{ data = JSON.parse(raw.trim()); }catch(e){}
+    
+    // 2. Extract largest {...} block
+    if(!data){
+      try{
+        const m = raw.match(/\{[\s\S]*\}/);
+        if(m) data = JSON.parse(m[0]);
+      }catch(e){}
     }
-  }catch(e){hideLoad('rm');toast('AI error — try again','err');}
+    
+    // 3. Strip markdown fences + try again
+    if(!data){
+      try{
+        const clean = raw.replace(/```json|```/gi,'').trim();
+        data = JSON.parse(clean);
+      }catch(e){}
+    }
+
+    // 4. Fix common JSON issues (trailing commas, etc)
+    if(!data){
+      try{
+        const fixed = raw
+          .replace(/```json|```/gi,'')
+          .replace(/,\s*}/g,'}')
+          .replace(/,\s*]/g,']')
+          .trim();
+        const m = fixed.match(/\{[\s\S]*\}/);
+        if(m) data = JSON.parse(m[0]);
+      }catch(e){}
+    }
+
+    if(data && data.phases && data.phases.length > 0){
+      renderRoadmapCards(data);
+    } else {
+      // Last resort: build beautiful cards from plain text
+      buildCardsFromText(raw, role, time);
+    }
+  }catch(e){ hideLoad('rm'); toast('AI error — try again','err'); }
+}
+
+// Smart fallback: ALWAYS show cards even if AI gives plain text
+function buildCardsFromText(text, role, time){
+  const emojis=['🔥','📊','🚀','💼','🏆'];
+  const colors=PHASE_COLORS;
+  const lines = text.split('\n').filter(l=>l.trim().length > 2);
+  
+  // Try to detect phase headings
+  const phaseRegex = /^(phase|week|step|stage|month|part|section|\d+[\.\)])/i;
+  let phases=[], cur=null, num=0;
+  
+  lines.forEach(line=>{
+    const clean = line.replace(/^[#\-\*]+\s*/,'').trim();
+    if(phaseRegex.test(clean) && clean.length < 70 && num < 5){
+      if(cur) phases.push(cur);
+      num++;
+      cur={number:num,name:clean.slice(0,45),duration:'Phase '+num,emoji:emojis[num-1]||'📌',skills:[],resources:[],project:'',outcome:'',bullets:[]};
+    } else if(cur){
+      if(line.match(/^[\-\*\•]\s*/)){
+        const item=line.replace(/^[\-\*\•]\s*/,'').trim().slice(0,50);
+        if(cur.skills.length<5) cur.skills.push(item);
+      } else if(line.toLowerCase().includes('project')||line.toLowerCase().includes('build')){
+        cur.project=clean.slice(0,100);
+      } else {
+        cur.bullets.push(clean.slice(0,80));
+      }
+    }
+  });
+  if(cur) phases.push(cur);
+  
+  // No phases found — split evenly into 4 cards
+  if(phases.length===0){
+    const chunk = Math.ceil(lines.length/4);
+    for(let i=0;i<4;i++){
+      const slice=lines.slice(i*chunk,(i+1)*chunk);
+      phases.push({number:i+1,name:['Foundation','Core Skills','Advanced','Job Ready'][i],duration:'Phase '+(i+1),emoji:emojis[i],skills:slice.slice(0,3).map(l=>l.slice(0,40)),resources:[],project:slice.slice(3,4).join(' ').slice(0,100)||'Build a portfolio project',outcome:slice.slice(4,5).join(' ').slice(0,100)||'Apply skills in real projects',bullets:[]});
+    }
+  }
+  
+  // Fill empty fields
+  phases.forEach(p=>{
+    if(!p.project) p.project = p.bullets.slice(0,1).join(' ')||'Build a hands-on portfolio project';
+    if(!p.outcome) p.outcome = p.bullets.slice(1,2).join(' ')||'Ready to apply for '+role+' roles';
+    if(p.skills.length===0) p.skills=p.bullets.slice(0,3).map(b=>b.slice(0,35));
+  });
+
+  renderRoadmapCards({
+    phases,
+    tips:['Apply when 70% ready — not 100% perfect','Build 2-3 portfolio projects before applying','LinkedIn optimization matters more than resume in India']
+  });
 }
 
 function renderRoadmapCards(data){
